@@ -58,7 +58,7 @@ public class TrashCashLoginFrame extends JFrame{
 	
 	public JPanel rightPanel() {
 		// Right Panel for Log-in Interface
-		loginPanelRight.setLayout(new FlowLayout());
+		loginPanelRight.setLayout(new BorderLayout());
 		
 		loginPanelRight.setPreferredSize(new Dimension(352,626));
 		loginPanelRight.setBackground(new Color(100,157,109));
