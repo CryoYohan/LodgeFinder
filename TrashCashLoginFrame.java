@@ -50,24 +50,23 @@ public class TrashCashLoginFrame extends JFrame{
 		this.setSize(FRAME_SIZE_WIDTH, FRAME_SIZE_HEIGHT);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
-		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setTitle("TrashCash");
 		this.setIconImage(TrashCashlogo.getImage());
 		this.setVisible(true);	
 		this.setLayout(new BorderLayout());
 		this.add(leftPanel(), BorderLayout.WEST);
 		this.add(rightPanel(), BorderLayout.EAST);
-//		this.addWindowListener(new WindowAdapter() {
-//			@Override
-//			public void windowClosing(WindowEvent evt) {
-//				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit Program", JOptionPane.YES_OPTION);
-//				if(confirm == JOptionPane.YES_OPTION) {
-//					setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//				} else {
-//					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-//				}
-//			}
-//		});
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent evt) {
+				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit Program", JOptionPane.YES_OPTION);
+				if(confirm == JOptionPane.YES_OPTION) {
+					setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				} else {
+					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+				}
+			}
+		});
 	}
 
 	public JPanel leftPanel() {
@@ -121,14 +120,12 @@ public class TrashCashLoginFrame extends JFrame{
         loginPanelRight.add(usernameLabel);
         usernameLabel.setBounds(83, 258, 110, 40);
         usernameLabel.setForeground(new Color(62,56,56));    // change color on user name label me 
-        usernameLabel.setFont(new Font("Actor-Regular", Font.PLAIN, 12));
+        usernameLabel.setFont(new Font("Actor", Font.PLAIN, 12));
 
         // USERNAME TEXTFIELD
         loginPanelRight.add(username);
         username.setBounds(80, 290, 233, 41); // adjust spacing
         username.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        // Add green line border to the username text field
-        username.setBorder(new LineBorder(new Color(25, 122, 46)));
 
         // PASSWORD LABEL
         // This sets letter spacing to our JLabel Texts, I got this from stack overflow. Feel free to utilize this code snippet
@@ -148,8 +145,6 @@ public class TrashCashLoginFrame extends JFrame{
         password.setBounds(80, 370, 233, 41);
         password.setFont(new Font("Segoe UI", Font.PLAIN, 15));
          
-        // Add green line border to the password text field
-          password.setBorder(new LineBorder(new Color(25, 122, 46)));
 
         // LOGIN BUTTON
         loginPanelRight.add(loginButton);
