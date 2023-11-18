@@ -4,19 +4,16 @@ import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.TextAttribute;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TrashCashLoginFrame extends JFrame implements ActionListener{
-
+	
 	final String registeredUser = "user123";
 	final String registeredPassword = "123456";
 	final int FRAME_SIZE_WIDTH = 833;
 	final int FRAME_SIZE_HEIGHT = 653;
-	private String usernameVar = " ", passwordVar = " ";
-	
+	private String usernameVar = " ", passwordVar = " ";	
 	
 	// Main Panels
 	JPanel loginPanelLeft = new JPanel();
@@ -24,12 +21,18 @@ public class TrashCashLoginFrame extends JFrame implements ActionListener{
 	
 	//ImageIcon
 	ImageIcon TrashCashlogo = new ImageIcon("TrashCashLogo.png");
-	ImageIcon Background = new ImageIcon("trashCashBG.jpg");
-	
-	// Custom Font Class
-	CustomFont actorFont = new CustomFont();
-	int borderRadius = 30;
-
+	//ImageIcon Background = new ImageIcon("trashCashBG.jpg");
+	int desiredWidth = 900; // Set your desired width
+	int desiredHeight = 660; // Set your desired height
+	ImageIcon Background = resizeImageIcon("trashCashBG.jpg", desiredWidth, desiredHeight);
+      
+   //Resize the background image
+   public static ImageIcon resizeImageIcon(String imagePath, int width, int height) {
+        ImageIcon imageIcon = new ImageIcon(imagePath);
+        Image image = imageIcon.getImage(); // transform it
+        Image newImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH); // scale it the smooth way
+        return new ImageIcon(newImage); // transform it back
+    }
 	//JLabel for Right Panel
 	JLabel logo = new JLabel();
 	JLabel BackgroundPic = new JLabel();
@@ -91,19 +94,28 @@ public class TrashCashLoginFrame extends JFrame implements ActionListener{
 		// Main TrashCash Heading in Left Panel
 		title.setFont(new Font("Segoe UI", Font.BOLD, 80));
 		title.setBounds(30, 465, 387, 92);
-		title.setForeground(new Color(255, 255, 255));
+		title.setForeground(new Color(245, 245, 245));
+		shadowTitle.setFont(new Font("Segoe UI", Font.BOLD, 80));
+		shadowTitle.setBounds(28, 467, 387, 92);
+		shadowTitle.setForeground(new Color(35, 66, 30));
 		// Quote Under Main Heading TrashCash Left panel
 		quote.setText("\"Transform Waste, Earn Green: Your Trash, Your Cash!\"");
 		quote.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		quote.setBounds(36, 545, 355, 50	);
 		quote.setForeground(new Color(222, 213, 213));
-
-		BackgroundPic.setIcon(Background);
+		
+		// Resize Background in left panel
+		loginPanelLeft.setLayout(null);
+		int backgroundX = -190;  // Set your desired X coordinate
+	    int backgroundY = -45;  // Set your desired Y coordinate
+	    BackgroundPic.setIcon(Background);
+	    BackgroundPic.setBounds(backgroundX, backgroundY, desiredWidth, desiredHeight);
+	      
+	    loginPanelLeft.add(BackgroundPic);
 
 		return loginPanelLeft;
 	}
 	
-
 	// Right Panel for Log-in Interface
     public JPanel rightPanel() {
         loginPanelRight.add(logo);
@@ -165,7 +177,6 @@ public class TrashCashLoginFrame extends JFrame implements ActionListener{
         		}
         	}
         });
-         
 
         // LOGIN BUTTON
         loginPanelRight.add(loginButton);
@@ -210,12 +221,58 @@ public class TrashCashLoginFrame extends JFrame implements ActionListener{
         username.setBorder(compoundBorder);
         password.setBorder(compoundBorder);
         
+        // Add placeholder text for username field
+        username.setForeground(new Color(61,189,112));
+        username.setFont(new Font("Segoe UI", Font.PLAIN, 15)); // Set font size
+        username.setText("Enter username");
+
+        // Add placeholder text for password field
+        password.setForeground(new Color(61,189,112));
+        password.setFont(new Font("Segoe UI", Font.PLAIN, 15)); // Set font size
+        password.setEchoChar((char) 0); // Set echo char to zero to show plain text
+        password.setText("Enter password");
+        
+     // Add focus listeners to the text fields
+        username.addFocusListener(new FocusAdapter() {
+        @Override
+        public void focusGained(FocusEvent e) {
+            if (username.getText().equals("Enter username")) { // if ma click na ang field, mawala ang placeholder
+                username.setText("");
+                username.setForeground(Color.BLACK);
+            }
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            if (username.getText().isEmpty()) { // If di ma click ang field, display placeholder
+                username.setText("Enter username");
+                username.setForeground(new Color(61,189,112)); // Color sa placeholder
+            }
+        }
+        });
+        password.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) { // If ma click na gali ang input field mawala ang placeholder
+                if (password.getText().equals("Enter password")) {
+                    password.setText("");
+                    password.setForeground(Color.BLACK);
+                    password.setEchoChar('*'); // Ang echoChar e set nato balik og '*' kay para ma encrypted ang pass sa user
+                }							   // gi EchoChar(0) man nato sya pag declare sa taas para di ma encrypt and placeholder
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) { // If di ma click ang input field, mo display ang "Enter password" na placeholder
+                if (password.getText().isEmpty()) {
+                    password.setForeground(new Color(61,189,112)); // Color sa placeholder
+                    password.setEchoChar((char)0);		// This sets the encrypted text of the JPasswordField to a plain/readable text
+                    password.setText("Enter password");
+                }
+            }
+        });
         return loginPanelRight; 
     }
 
-	public void logIn(ActionEvent e) {
-		
-	}
+	
 
 	// If user clicks button, username and password will be stored and compares it if it's the same as the registeredUser and pass
 	// if it is then the program proceeds to output a demo main interface, else it displays invalid user/pass
