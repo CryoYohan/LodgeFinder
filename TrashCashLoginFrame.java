@@ -9,10 +9,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TrashCashLoginFrame extends JFrame{
+public class TrashCashLoginFrame extends JFrame implements ActionListener{
 
+	final String registeredUser = "user123";
+	final String registeredPassword = "123456";
 	final int FRAME_SIZE_WIDTH = 833;
 	final int FRAME_SIZE_HEIGHT = 653;
+	private String usernameVar = " ", passwordVar = " ";
+	
 	
 	// Main Panels
 	JPanel loginPanelLeft = new JPanel();
@@ -56,6 +60,7 @@ public class TrashCashLoginFrame extends JFrame{
 		this.setLayout(new BorderLayout());
 		this.add(leftPanel(), BorderLayout.WEST);
 		this.add(rightPanel(), BorderLayout.EAST);
+		this.setLocationRelativeTo(null);;
 		this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent evt) {
@@ -125,7 +130,7 @@ public class TrashCashLoginFrame extends JFrame{
         // USERNAME TEXTFIELD
         loginPanelRight.add(username);
         username.setBounds(80, 290, 233, 41); // adjust spacing
-        username.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        username.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 
         // PASSWORD LABEL
         // This sets letter spacing to our JLabel Texts, I got this from stack overflow. Feel free to utilize this code snippet
@@ -144,6 +149,22 @@ public class TrashCashLoginFrame extends JFrame{
         loginPanelRight.add(password);
         password.setBounds(80, 370, 233, 41);
         password.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+     // If user enters ENTER button, username and password will be stored and compares it if it's the same as the registeredUser and pass
+    	// if it is then the program proceeds to output a demo main interface, else it displays invalid user/pass
+        password.addKeyListener(new KeyAdapter() {
+        	public void keyPressed(KeyEvent e) {
+        		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+        			usernameVar = username.getText();
+        			passwordVar = password.getText();
+        			if(usernameVar.equals(registeredUser) && passwordVar.equals(registeredPassword)) {
+        				JOptionPane.showMessageDialog(null, "Login Successful! Welcome " + usernameVar);
+        			}
+        			else {
+        				JOptionPane.showMessageDialog(null,"Login Unsuccessful! New Account? Register now!","TrashCash", JOptionPane.ERROR_MESSAGE);
+        			}
+        		}
+        	}
+        });
          
 
         // LOGIN BUTTON
@@ -153,24 +174,61 @@ public class TrashCashLoginFrame extends JFrame{
         loginButton.setForeground(new Color(245, 245, 245));
         loginButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         loginButton.setFocusable(false);
+        loginButton.addActionListener(this);;
         
      // New Account? Register here
-        JLabel blueHere = new JLabel("here");
-        blueHere.setForeground(new Color(61,189,112));
-        blueHere.setBounds(269,460,200,200);
-        blueHere.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        JLabel greenHere = new JLabel("here");
+        greenHere.setForeground(new Color(61,189,112));
+        greenHere.setBounds(268,540,40,40);
+        greenHere.setFont(new Font("Segoe UI", Font.BOLD, 15));
         loginPanelRight.add(registerHere);
-        loginPanelRight.add(blueHere);
+        loginPanelRight.add(greenHere);
         registerHere.setBounds(110, 460, 200, 200);
         registerHere.setForeground(new Color(62,56,56));
         registerHere.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        greenHere.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        		if(e.getSource() == greenHere) {
+        			JOptionPane.showMessageDialog(null, "Register User Interface", "TrashCash", JOptionPane.QUESTION_MESSAGE);
+        		}
+        	}
+        		// if user hovers over highlighted "here" button it will change cursor to hand
+        	 @Override
+             public void mouseEntered(MouseEvent e) {
+                 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+             }
+        	// if user stops hover over highlighted "here" button it will change hand cursor to default
+             @Override
+             public void mouseExited(MouseEvent e) {
+                 setCursor(Cursor.getDefaultCursor());
+             }
+        });
         
         Border greenLineBorder = new LineBorder(new Color(25, 122, 46), 2, true);
         Border emptyBorder = new EmptyBorder(0, 5, 0, 5); // adjust padding on up and down. >>>>>>>>>>>>>>>>>>>
         Border compoundBorder = new CompoundBorder(greenLineBorder, emptyBorder);
         username.setBorder(compoundBorder);
         password.setBorder(compoundBorder);
-
+        
         return loginPanelRight; 
     }
+
+	public void logIn(ActionEvent e) {
+		
+	}
+
+	// If user clicks button, username and password will be stored and compares it if it's the same as the registeredUser and pass
+	// if it is then the program proceeds to output a demo main interface, else it displays invalid user/pass
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		if(source==loginButton) {
+			usernameVar = username.getText();
+			passwordVar = password.getText();
+			if(usernameVar.equals(registeredUser) && passwordVar.equals(registeredPassword))
+				JOptionPane.showMessageDialog(null, "Login Successful! Welcome " + usernameVar);
+			else
+				JOptionPane.showMessageDialog(null,"Invalid Username/Password! New Account? Register now!","TrashCash", JOptionPane.ERROR_MESSAGE);		
+		}		
+	}
 }
