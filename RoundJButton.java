@@ -27,13 +27,6 @@ public class RoundJButton extends JButton {
         setForeground(Color.WHITE); // Set text color
         setBackground(defaultColor);
 
-        addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Handle button click event
-                System.out.println("Button clicked!");
-            }
-        });
 
         addMouseListener(new MouseAdapter() {
             @Override

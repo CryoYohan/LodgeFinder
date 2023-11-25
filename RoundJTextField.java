@@ -25,7 +25,7 @@ public class RoundJTextField extends JTextField {
 
     protected void paintBorder(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(new Color(25, 122, 46)); // RGB color (25, 122, 46)
+        g2.setColor(new Color(50, 89, 127)); // RGB color (25, 122, 46)
         g2.setStroke(new BasicStroke(2)); // Set the border width to 2 pixels
         int arc = 5; // Corner radius
         int x = 1; // Adjusted to 1 pixel to make room for the border
