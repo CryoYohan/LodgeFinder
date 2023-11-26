@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class LodgeHubLoginFrame extends JFrame implements ActionListener{
 
+	RegistrationForm register;
 	final String registeredUser = "cyril123";
 	final String registeredPassword = "123456";
 	final int FRAME_SIZE_WIDTH = 833;
@@ -88,7 +89,6 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
 		loginPanelLeft.setLayout(new BorderLayout());
 		loginPanelLeft.setPreferredSize(new Dimension(469,667));
 		loginPanelLeft.setBackground(new Color(0, 0, 0, 45));
-		loginPanelLeft.add(BackgroundPic);
 			
 		// Resize Background in left panel
 		loginPanelLeft.setLayout(null);
@@ -192,7 +192,8 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
         greenHere.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
         		if(e.getSource() == greenHere) {
-        			JOptionPane.showMessageDialog(null, "Register User Interface", "LodgeHub", JOptionPane.QUESTION_MESSAGE);
+        			dispose();
+        			register = new RegistrationForm();
         		}
         	}
         		// if user hovers over highlighted "here" button it will change cursor to hand
