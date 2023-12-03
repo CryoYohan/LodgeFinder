@@ -1,4 +1,3 @@
-package trashcash;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
@@ -23,12 +22,14 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
 	JPanel loginPanelRight = new JPanel();
 	
 	//ImageIcon
-	ImageIcon LodgeFinderIcon = new ImageIcon("LodgeHubIcon.png");
-	ImageIcon LodgeFinder = resizeImageLogo("LodgeHub.png", 260,260);
+	ImageIcon LodgeFinderIcon = new ImageIcon("Image/LodgeHubIcon.png");
+	ImageIcon LodgeFinder = resizeImageLogo("Image/LodgeHub.png", 260,260);
+    ImageIcon View = new ImageIcon("Image/View1.png");
+    ImageIcon Hide = new ImageIcon("Image/Hide1.png");
 	//ImageIcon Background = new ImageIcon("trashCashBG.jpg");
 	int desiredWidth = 477; // Set your desired width
 	int desiredHeight = 667; // Set your desired height
-	ImageIcon Background = resizeImageIcon("LoginWallpaper.jpg", desiredWidth, desiredHeight);
+	ImageIcon Background = resizeImageIcon("Image/LoginWallpaper.jpg", desiredWidth, desiredHeight);
     //Resize LodgeFinder Logo
 	 public static ImageIcon resizeImageLogo(String imagePath, int width, int height) {
 	        ImageIcon imageIcon = new ImageIcon(imagePath);
@@ -51,6 +52,8 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
 	JLabel BackgroundPic = new JLabel();
 	JLabel usernameLabel = new JLabel("USERNAME");
 	JLabel passwordLabel = new JLabel("PASSWORD");
+    JLabel viewPassword = new JLabel();
+    JLabel hidePassword = new JLabel();
 	JLabel registerHere = new JLabel("New Account? Register ");
 	Border empty = new EmptyBorder(0, 0, 0, 0);
 	
@@ -143,6 +146,48 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
         passwordLabel.setBounds(83, 338, 111, 40);
         passwordLabel.setForeground(new Color(13,77,140));      // Change color on password label  me
         passwordLabel.setFont(new Font("Actor", Font.PLAIN, 12)); // change into Plain color me size it for 15
+
+        // EYE ICON TO SHOW OR HIDE PASSWORD ASTERISK;
+        loginPanelRight.add(hidePassword);
+        hidePassword.setIcon(Hide);
+        hidePassword.setBounds(288, 382, 18, 18);
+        hidePassword.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                hidePassword.setVisible(false);
+                viewPassword.setVisible(true);
+                password.setEchoChar((char)0);
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(Cursor.getDefaultCursor());
+            }
+        });
+
+        loginPanelRight.add(viewPassword);
+        viewPassword.setIcon(View);
+        viewPassword.setBounds(288, 382, 18, 18);
+        viewPassword.setVisible(false);
+        viewPassword.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                viewPassword.setVisible(false);
+                hidePassword.setVisible(true);
+                password.setEchoChar('*');
+            };
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(Cursor.getDefaultCursor());
+            }
+        });
 
         // PASSWORD TEXTFIELD
         loginPanelRight.add(password);
