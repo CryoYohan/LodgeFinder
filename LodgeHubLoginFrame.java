@@ -1,17 +1,23 @@
+package trashcash;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.TextAttribute;
-
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LodgeHubLoginFrame extends JFrame implements ActionListener{
-
-	RegistrationForm register;
-	final String registeredUser = "cyril123";
-	final String registeredPassword = "123456";
+	RegistrationForm register = new RegistrationForm();
+	RegisteredAccounts accounts;
+	String registeredUser = " ";
+	String registeredPassword = " ";
+	String Username, Password, Email;
 	final int FRAME_SIZE_WIDTH = 833;
 	final int FRAME_SIZE_HEIGHT = 653;
 	private String usernameVar = " ", passwordVar = " ";
@@ -22,14 +28,12 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
 	JPanel loginPanelRight = new JPanel();
 	
 	//ImageIcon
-	ImageIcon LodgeFinderIcon = new ImageIcon("Image/LodgeHubIcon.png");
-	ImageIcon LodgeFinder = resizeImageLogo("Image/LodgeHub.png", 260,260);
-    ImageIcon View = new ImageIcon("Image/View1.png");
-    ImageIcon Hide = new ImageIcon("Image/Hide1.png");
+	ImageIcon LodgeFinderIcon = new ImageIcon("LodgeHubIcon.png");
+	ImageIcon LodgeFinder = resizeImageLogo("LodgeHub.png", 260,260);
 	//ImageIcon Background = new ImageIcon("trashCashBG.jpg");
 	int desiredWidth = 477; // Set your desired width
 	int desiredHeight = 667; // Set your desired height
-	ImageIcon Background = resizeImageIcon("Image/LoginWallpaper.jpg", desiredWidth, desiredHeight);
+	ImageIcon Background = resizeImageIcon("LoginWallpaper.jpg", desiredWidth, desiredHeight);
     //Resize LodgeFinder Logo
 	 public static ImageIcon resizeImageLogo(String imagePath, int width, int height) {
 	        ImageIcon imageIcon = new ImageIcon(imagePath);
@@ -52,8 +56,6 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
 	JLabel BackgroundPic = new JLabel();
 	JLabel usernameLabel = new JLabel("USERNAME");
 	JLabel passwordLabel = new JLabel("PASSWORD");
-    JLabel viewPassword = new JLabel();
-    JLabel hidePassword = new JLabel();
 	JLabel registerHere = new JLabel("New Account? Register ");
 	Border empty = new EmptyBorder(0, 0, 0, 0);
 	
@@ -147,48 +149,6 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
         passwordLabel.setForeground(new Color(13,77,140));      // Change color on password label  me
         passwordLabel.setFont(new Font("Actor", Font.PLAIN, 12)); // change into Plain color me size it for 15
 
-        // EYE ICON TO SHOW OR HIDE PASSWORD ASTERISK;
-        loginPanelRight.add(hidePassword);
-        hidePassword.setIcon(Hide);
-        hidePassword.setBounds(288, 382, 18, 18);
-        hidePassword.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                hidePassword.setVisible(false);
-                viewPassword.setVisible(true);
-                password.setEchoChar((char)0);
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            }
-            
-            @Override
-            public void mouseExited(MouseEvent e) {
-                setCursor(Cursor.getDefaultCursor());
-            }
-        });
-
-        loginPanelRight.add(viewPassword);
-        viewPassword.setIcon(View);
-        viewPassword.setBounds(288, 382, 18, 18);
-        viewPassword.setVisible(false);
-        viewPassword.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                viewPassword.setVisible(false);
-                hidePassword.setVisible(true);
-                password.setEchoChar('*');
-            };
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            }
-            
-            @Override
-            public void mouseExited(MouseEvent e) {
-                setCursor(Cursor.getDefaultCursor());
-            }
-        });
-
         // PASSWORD TEXTFIELD
         loginPanelRight.add(password);
         password.setBounds(80, 370, 233, 41);
@@ -200,12 +160,11 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
         		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
         			usernameVar = username.getText();
         			passwordVar = password.getText();
-        			if(usernameVar.equals(registeredUser) && passwordVar.equals(registeredPassword)) {
-        				JOptionPane.showMessageDialog(null, "Login Successful! Welcome " + usernameVar);
-        			}
-        			else {
-        				JOptionPane.showMessageDialog(null,"Login Unsuccessful! New Account? Register now!","TrashCash", JOptionPane.ERROR_MESSAGE);
-        			}
+        			register.createFolder();
+        			register.readFile();
+        			register.countLines();
+        			register.logic(usernameVar,passwordVar);
+        			
         		}
         	}
         });
@@ -238,7 +197,7 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
         	public void mouseClicked(MouseEvent e) {
         		if(e.getSource() == greenHere) {
         			dispose();
-        			register = new RegistrationForm();
+        			register.openRegister();
         		}
         	}
         		// if user hovers over highlighted "here" button it will change cursor to hand
@@ -320,10 +279,12 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
 		if(source==loginButton) {
 			usernameVar = username.getText();
 			passwordVar = password.getText();
-			if(usernameVar.equals(registeredUser) && passwordVar.equals(registeredPassword))
-				JOptionPane.showMessageDialog(null, "Login Successful! Welcome " + usernameVar);
-			else
-				JOptionPane.showMessageDialog(null,"Invalid Username/Password! New Account? Register now!","TrashCash", JOptionPane.ERROR_MESSAGE);		
+			register.createFolder();
+			register.readFile();
+			register.countLines();
+			register.logic(usernameVar,passwordVar);
+			// duha ni kabuok, ang mga click sa method og ang enter key, naas line 159
 		}		
 	}
+	
 }
