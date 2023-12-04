@@ -1,32 +1,43 @@
+package trashcash;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.TextAttribute;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RegistrationForm extends JFrame{
-
+	
+	File f = new File("C:\\Users\\CYRIL\\OneDrive\\Desktop\\School Files\\OOPROG21\\LodgeHub\\Accounts");
 	final int FRAME_SIZE_WIDTH = 833;
 	final int FRAME_SIZE_HEIGHT = 653;
+	int ln; // for count lines method
 	private String usernameVar = " ", passwordVar = " ";
-    LodgeHubLoginFrame LodgeHubLoginFrame;
-	
+    String localfname, locallname, localphonenumber, localemail, user, pass;
+    int localage, registered = 0; // registered is a variable the helps count how many accounts are registered and store it in the array of object
 	
 	// Main Panels
 	JPanel loginPanelLeft = new JPanel();
 	JPanel loginPanelRight = new JPanel();
 	
 	//ImageIcon
-	ImageIcon LodgeFinderIcon = new ImageIcon("Image/LodgeHubIcon.png");
-	ImageIcon LodgeFinder = resizeImageLogo("Image/LodgeHub.png", 260,260);
-    ImageIcon View = new ImageIcon("Image/View.png");
-    ImageIcon Hide = new ImageIcon("Image/Hide.png");
+	ImageIcon LodgeFinderIcon = new ImageIcon("LodgeHubIcon.png");
+	ImageIcon LodgeFinder = resizeImageLogo("LodgeHub.png", 260,260);
+    ImageIcon View = new ImageIcon("View.png");
+    ImageIcon Hide = new ImageIcon("Hide.png");
 	//ImageIcon Background = new ImageIcon("trashCashBG.jpg");
 	int desiredWidth = 477; // Set your desired width
 	int desiredHeight = 667; // Set your desired height
-	ImageIcon Background = resizeImageIcon("Image/LoginWallpaper.jpg", desiredWidth, desiredHeight);
+	ImageIcon Background = resizeImageIcon("LoginWallpaper.jpg", desiredWidth, desiredHeight);
     //Resize LodgeFinder Logo
 	 public static ImageIcon resizeImageLogo(String imagePath, int width, int height) {
 	        ImageIcon imageIcon = new ImageIcon(imagePath);
@@ -63,7 +74,7 @@ public class RegistrationForm extends JFrame{
     JLabel greenHere = new JLabel("here");
 	Border empty = new EmptyBorder(0, 0, 0, 0);
 
-	JButton loginButton = new RoundJButton("Register");
+	JButton registerButton = new RoundJButton("Register");
 	JTextField phonenumber = new RoundJTextField(15);
 	JTextField age = new RoundJTextField(15);
 	JTextField email = new RoundJTextField(15);
@@ -74,8 +85,8 @@ public class RegistrationForm extends JFrame{
 	JPasswordField password = new RoundJPasswordField(15);
     JPasswordField confirmpass = new RoundJPasswordField(15);
 	
-	RegistrationForm(){
-		this.setSize(FRAME_SIZE_WIDTH, FRAME_SIZE_HEIGHT);
+    public void openRegister() {
+    	this.setSize(FRAME_SIZE_WIDTH, FRAME_SIZE_HEIGHT);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setTitle("LodgeFinder");
@@ -96,7 +107,7 @@ public class RegistrationForm extends JFrame{
 				}
 			}
 		});
-	}
+    }
 
 	public JPanel leftPanel() {
 		// Left Panel for Log-in Interface
@@ -140,7 +151,7 @@ public class RegistrationForm extends JFrame{
             fnameLabel.setFont(fnameLabel.getFont().deriveFont(attributes));
         });
         fnameLabel.setBounds(40, 140,100,40);
-        fnameLabel.setFont(new Font("Actor", Font.PLAIN, 12));
+        fnameLabel.setFont(new Font("Actor", Font.PLAIN, 9));
         fnameLabel.setForeground(new Color(13, 77, 140));
         //TEXT FIELD AND LABEL FOR LASTNAME
         loginPanelRight.add(lname);
@@ -154,7 +165,7 @@ public class RegistrationForm extends JFrame{
             lnameLabel.setFont(lnameLabel.getFont().deriveFont(attributes));
         });
         lnameLabel.setBounds(200, 140, 100, 40);
-        lnameLabel.setFont(new Font("Actor", Font.PLAIN, 12));
+        lnameLabel.setFont(new Font("Actor", Font.PLAIN, 9));
         lnameLabel.setForeground(new Color(13, 77, 140));
         // PHONE NUMBER TEXTFIELD AND LABEL
         loginPanelRight.add(phonenumber);
@@ -168,7 +179,7 @@ public class RegistrationForm extends JFrame{
             phonenumberLabel.setFont(phonenumberLabel.getFont().deriveFont(attributes));
         });
         phonenumberLabel.setBounds(40, 194, 130, 40);
-        phonenumberLabel.setFont(new Font("Actor", Font.PLAIN, 12));
+        phonenumberLabel.setFont(new Font("Actor", Font.PLAIN, 9));
         phonenumberLabel.setForeground(new Color(13, 77, 140));
         // AGE TEXTFIELD AND LABEL
         loginPanelRight.add(age);
@@ -182,7 +193,7 @@ public class RegistrationForm extends JFrame{
             ageLabel.setFont(ageLabel.getFont().deriveFont(attributes));
         });
         ageLabel.setBounds(200, 194, 80, 40);
-        ageLabel.setFont(new Font("Actor", Font.PLAIN, 12));
+        ageLabel.setFont(new Font("Actor", Font.PLAIN, 9));
         ageLabel.setForeground(new Color(13, 77, 140));
         // EMAIL ADDRESS TEXTFIELD AND LABEL
         loginPanelRight.add(email);
@@ -196,7 +207,7 @@ public class RegistrationForm extends JFrame{
             emailLabel.setFont(emailLabel.getFont().deriveFont(attributes));
         });
         emailLabel.setBounds(40, 248, 130, 40);
-        emailLabel.setFont(new Font("Actor", Font.PLAIN, 12));
+        emailLabel.setFont(new Font("Actor", Font.PLAIN, 9));
         emailLabel.setForeground(new Color(13, 77, 140));
         // USERNAME TEXTFIELD and LABEL
         loginPanelRight.add(username);
@@ -212,7 +223,7 @@ public class RegistrationForm extends JFrame{
         loginPanelRight.add(usernameLabel);
         usernameLabel.setBounds(200, 248, 110, 40);
         usernameLabel.setForeground(new Color(13,77,140));    // change color on user name label me 
-        usernameLabel.setFont(new Font("Actor", Font.PLAIN, 12));
+        usernameLabel.setFont(new Font("Actor", Font.PLAIN, 9));
         // PASSWORD LABEL and TEXTFIELD
         // This sets letter spacing to our JLabel Texts, I got this from stack overflow. Feel free to utilize this code snippet
         SwingUtilities.invokeLater(() -> {
@@ -224,7 +235,7 @@ public class RegistrationForm extends JFrame{
         loginPanelRight.add(passwordLabel);
         passwordLabel.setBounds(40, 302, 111, 40);
         passwordLabel.setForeground(new Color(13,77,140));      // Change color on password label  me
-        passwordLabel.setFont(new Font("Actor", Font.PLAIN, 12)); // change into Plain color me size it for 15
+        passwordLabel.setFont(new Font("Actor", Font.PLAIN, 9)); // change into Plain color me size it for 15
 
         // EYE ICON TO SHOW OR HIDE PASSWORD ASTERISK;
         loginPanelRight.add(hidePassword);
@@ -281,9 +292,9 @@ public class RegistrationForm extends JFrame{
             confirmpassLabel.setFont(confirmpassLabel.getFont().deriveFont(attributes));
         });
         loginPanelRight.add(confirmpassLabel);
-        confirmpassLabel.setBounds(200, 302, 125, 40);
+        confirmpassLabel.setBounds(200, 302, 135, 40);
         confirmpassLabel.setForeground(new Color(13,77,140));
-        confirmpassLabel.setFont(new Font("Actor", Font.PLAIN, 12));
+        confirmpassLabel.setFont(new Font("Actor", Font.PLAIN, 9));
 
         loginPanelRight.add(hideConfirmPass);
         hideConfirmPass.setIcon(Hide);
@@ -330,13 +341,13 @@ public class RegistrationForm extends JFrame{
         confirmpass.setBounds(200, 334, 145, 25);
         confirmpass.setFont(new Font("Segoe UI", Font.PLAIN, 12));
          
-        // LOGIN BUTTON
-        loginPanelRight.add(loginButton);
-        loginButton.setBounds(125, 438, 148, 40);
-        loginButton.setBackground(new Color(13, 77, 140));
-        loginButton.setForeground(new Color(255, 255, 255));
-        loginButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        loginButton.setFocusable(false);
+        // REGISTER BUTTON
+        loginPanelRight.add(registerButton);
+        registerButton.setBounds(125, 438, 148, 40);
+        registerButton.setBackground(new Color(13, 77, 140));
+        registerButton.setForeground(new Color(255, 255, 255));
+        registerButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        registerButton.setFocusable(false);
         
      // New Account? Register here
         JLabel copyright = new JLabel("©2023 LodgeFinder. All rights reserved");
@@ -355,7 +366,7 @@ public class RegistrationForm extends JFrame{
         	public void mouseClicked(MouseEvent e) {
         		if(e.getSource() == greenHere) {
         			dispose();
-        			LodgeHubLoginFrame = new LodgeHubLoginFrame();
+        			new LodgeHubLoginFrame();
         		}
         	}
         	// if user hovers over highlighted "here" button it will change cursor to hand
@@ -384,37 +395,45 @@ public class RegistrationForm extends JFrame{
 
         // Add placeholder text for first name
         fname.setForeground(new Color(100, 178, 255));
-        fname.setText("Enter first name");
+        String fnamePH = "Enter first name"; 
+        fname.setText(fnamePH);
 
         // Placeholder text for last name
         lname.setForeground(new Color(100, 178, 255));
-        lname.setText("Enter last name");
+        String lnamePH = "Enter last name";
+        lname.setText(lnamePH);
         
         // Placeholder text for PHONE NUMBER
         phonenumber.setForeground(new Color(100, 178, 255));
-        phonenumber.setText("Enter phone number");
+        String phonenumberPH = "Enter phone number";
+        phonenumber.setText(phonenumberPH);
 
         // Placeholder para sa AGE
         age.setForeground(new Color(100, 178, 255));
-        age.setText("Enter age");
+        String agePH = "Enter age";
+        age.setText(agePH);
 
         // Placeholder text for EMAIL ADDRESS
         email.setForeground(new Color(100, 178, 255));
-        email.setText("Enter email address");
+        String emailPH = "Enter email address";
+        email.setText(emailPH);
 
         // Add placeholder text for username field
         username.setForeground(new Color(100,178,255));
-        username.setText("Enter username");
+        String usernamePH = "Enter username";
+        username.setText(usernamePH);
 
         // Add placeholder text for password field
         password.setForeground(new Color(100,178,255));
         password.setEchoChar((char) 0); // Set echo char to zero to show plain text
-        password.setText("Enter password");
+        String passwordPH = "Enter password";
+        password.setText(passwordPH);
 
         // Add placeholder text for confirmation password
         confirmpass.setForeground(new Color(100, 178, 255));
         confirmpass.setEchoChar((char) 0);
-        confirmpass.setText("Enter password");
+        String confirmpassPH = "Enter password";
+        confirmpass.setText(confirmpassPH);
         
      // Add focus listeners to the text fields
         username.addFocusListener(new FocusAdapter() {
@@ -551,20 +570,141 @@ public class RegistrationForm extends JFrame{
             }
         }
         });
-        return loginPanelRight; 
+    	registerButton.addActionListener(new ActionListener() {
+        
+           		@Override
+           		public void actionPerformed(ActionEvent e) {
+           			Object source = e.getSource();
+           			if(source== registerButton) {
+           				if(!fname.getText().equals(fnamePH) && !lname.getText().equals(lnamePH) && !phonenumber.getText().equals(phonenumberPH)
+           						&& !age.getText().equals(agePH) && !email.equals(emailPH) && !username.getText().equals(usernamePH) && !password.getText().equals(passwordPH) && !confirmpass.getText().equals(confirmpassPH)) {
+           			
+           					localfname = fname.getText();
+           					locallname = lname.getText();
+           					localphonenumber = phonenumber.getText();
+           					localemail = email.getText();
+           					String ageconvert = age.getText();
+           					localage = Integer.parseInt(ageconvert);
+           					user = username.getText();
+           					pass = password.getText();
+           					createFolder();
+           					readFile();
+           					countLines();
+           					addData(user,pass,localemail);
+           					registerButton.setText("SUCCESS!");
+           					registerButton.setForeground(Color.GREEN);
+           					try {
+								Thread.sleep(1000);
+								dispose();
+	           					new LodgeHubLoginFrame();
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+       
+           				}
+           				else {
+           					JOptionPane.showMessageDialog(null, "Please fill-in empty fields", "LodgeHub", JOptionPane.WARNING_MESSAGE);
+           				}
+           			}
+           			
+           		}
+               	 
+                });
+        return loginPanelRight;          
     }
-
-	// Magamit ni para Register button
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		Object source = e.getSource();
-//		if(source==loginButton) {
-//			usernameVar = username.getText();
-//			passwordVar = password.getText();
-//			if(usernameVar.equals(registeredUser) && passwordVar.equals(registeredPassword))
-//				JOptionPane.showMessageDialog(null, "Login Successful! Welcome " + usernameVar);
-//			else
-//				JOptionPane.showMessageDialog(null,"Invalid Username/Password! New Account? Register now!","TrashCash", JOptionPane.ERROR_MESSAGE);		
-//		}		
-//	}
+ // REGISTER THE USER'S CREDENTIALS
+    // If folder doesn't exist, create new folder
+    void createFolder() {
+    	if(!f.exists()) {
+    		f.mkdirs();
+    	}
+    }
+    // Checks if file exist, if not create file
+    void readFile() {
+    	try {
+			FileReader fr = new FileReader(f+"\\accounts.txt");
+			System.out .println("file exists!");
+		} catch (FileNotFoundException ex) {
+			try {
+				FileWriter fw = new FileWriter(f+"\\accounts.txt");
+				System.out.println("File created!");
+			} catch (IOException ex1) {
+				Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex1);
+			}
+			
+		}
+    }
+    // Add data to Text file, user, pass and email
+    void addData(String usr, String pswd, String mail) {
+    	try {
+			RandomAccessFile raf = new RandomAccessFile(f+"\\accounts.txt", "rw");
+			for(int i = 0; i < ln; i++) {
+				raf.readLine(); 
+			}		
+			raf.writeBytes("Username:" + usr + "\r\n");
+			raf.writeBytes("Password:" + pswd + "\r\n");
+			raf.writeBytes("Email:" + mail);
+			raf.writeBytes("\r\n");
+			raf.writeBytes("\r\n");
+		} catch (FileNotFoundException ex) {
+			Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex);
+		}
+    }
+    // Count lines, i think lines is every user's info like line 1 composed of user 1's user pass and email
+    void countLines() {   	
+    	try {
+    		ln = 1;
+			RandomAccessFile raf = new RandomAccessFile(f+"\\accounts.txt", "rw");
+			for(int i = 0;raf.readLine()!=null;i++) {
+				ln++;
+			}
+			System.out.println("number of lines: " + ln);
+		} catch (FileNotFoundException ex) {
+			System.out.println("1");
+			Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex);
+		} catch (IOException ex) {
+			System.out.println("2");
+			Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex);
+		}
+    }
+    // This checks the data inputted in the login user and pass if it matches or not, dire ang naay error
+    // If sayop na user og pass imong ibutang sa login supposedly mo display incorrect user/pass
+    // Nya dili man, Calida try to find out ngano ni, after nimo ma solve e remove ni na comment nya ipabilin ang 
+    // info about ani nga method
+    void logic(String usr, String pswd) {
+    	try {
+			RandomAccessFile raf = new RandomAccessFile(f + "\\accounts.txt", "rw");
+			for(int i = 0; i < ln; i+=4) {
+				System.out.println("count " + i);
+				String forUser = raf.readLine().substring(9);
+				String forPass = raf.readLine().substring(9);
+				if(usr.equals(forUser) & pswd.equals(forPass)) {
+					JOptionPane.showMessageDialog(null, "Login Successful!");
+					break;
+				}
+				else if(i==ln-3)
+					JOptionPane.showMessageDialog(null, "Invalid User/Password");
+				
+				for(int k =1; k <= 2; k++) {
+					raf.readLine();
+				}
+				
+			}
+		} catch (FileNotFoundException ex) {
+			System.out.println("1");
+			Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex);
+		} catch (IOException ex) {
+			System.out.println("2");
+			Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex);
+		}
+    	
+    	/**
+    	 * TO DO:
+    	 * - Indicator na successful ang pagka register
+    	 */
+    }
+      
 }
