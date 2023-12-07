@@ -16,11 +16,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RegistrationForm extends JFrame{
+
+	RegistrationBackend backend = new RegistrationBackend();
 	
-	File f = new File("C:\\Users\\CYRIL\\OneDrive\\Desktop\\School Files\\OOPROG21\\LodgeHub\\Accounts");
 	final int FRAME_SIZE_WIDTH = 833;
 	final int FRAME_SIZE_HEIGHT = 653;
-	int ln; // for count lines method
 	private String usernameVar = " ", passwordVar = " ";
     String localfname, locallname, localphonenumber, localemail, user, pass;
     int localage, registered = 0; // registered is a variable the helps count how many accounts are registered and store it in the array of object
@@ -28,12 +28,16 @@ public class RegistrationForm extends JFrame{
 	// Main Panels
 	JPanel loginPanelLeft = new JPanel();
 	JPanel loginPanelRight = new JPanel();
+	// Placeholders
+	String fnamePH = "Enter first name",lnamePH = "Enter last name",phonenumberPH = "Enter phone number",agePH = "Enter age", emailPH = "Enter email address",usernamePH = "Enter username",passwordPH = "Enter password",confirmpassPH = "Enter password";
 	
 	//ImageIcon
 	ImageIcon LodgeFinderIcon = new ImageIcon("LodgeHubIcon.png");
 	ImageIcon LodgeFinder = resizeImageLogo("LodgeHub.png", 260,260);
     ImageIcon View = new ImageIcon("View.png");
     ImageIcon Hide = new ImageIcon("Hide.png");
+    Color placeholderColor = new Color(100,178,255);
+    
 	//ImageIcon Background = new ImageIcon("trashCashBG.jpg");
 	int desiredWidth = 477; // Set your desired width
 	int desiredHeight = 667; // Set your desired height
@@ -52,8 +56,6 @@ public class RegistrationForm extends JFrame{
         Image newImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH); // scale it the smooth way
         return new ImageIcon(newImage); // transform it back
     }
-
-	
 
 	//JLabel for Right Panel
 	JLabel logo = new JLabel();
@@ -127,7 +129,7 @@ public class RegistrationForm extends JFrame{
 		return loginPanelLeft;
 	}
 
-
+	
 	// Right Panel for Log-in Interface
     public JPanel rightPanel() {
         loginPanelRight.add(logo);
@@ -139,45 +141,32 @@ public class RegistrationForm extends JFrame{
         loginPanelRight.setLayout(null);
 
         // First Name TextField and Label
+        
         loginPanelRight.add(fname);
         fname.setBounds(40,172,145,25);
         fname.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         loginPanelRight.add(fnameLabel);
-        // This sets letter spacing to our JLabel Texts, I got this from stack overflow. Feel free to utilize this code snippet
-        SwingUtilities.invokeLater(() -> {
-            Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-            attributes.put(TextAttribute.TRACKING, 0.25);
-
-            fnameLabel.setFont(fnameLabel.getFont().deriveFont(attributes));
-        });
+        spacing(fnameLabel);
         fnameLabel.setBounds(40, 140,100,40);
         fnameLabel.setFont(new Font("Actor", Font.PLAIN, 9));
         fnameLabel.setForeground(new Color(13, 77, 140));
         //TEXT FIELD AND LABEL FOR LASTNAME
+        
         loginPanelRight.add(lname);
         lname.setBounds(200, 172, 145, 25);
         lname.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         loginPanelRight.add(lnameLabel);
-        SwingUtilities.invokeLater(() -> {
-            Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-            attributes.put(TextAttribute.TRACKING, 0.25);
-
-            lnameLabel.setFont(lnameLabel.getFont().deriveFont(attributes));
-        });
+        spacing(lnameLabel);
         lnameLabel.setBounds(200, 140, 100, 40);
         lnameLabel.setFont(new Font("Actor", Font.PLAIN, 9));
         lnameLabel.setForeground(new Color(13, 77, 140));
+        
         // PHONE NUMBER TEXTFIELD AND LABEL
         loginPanelRight.add(phonenumber);
         phonenumber.setBounds(40, 226, 145, 25);
         phonenumber.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         loginPanelRight.add(phonenumberLabel);
-        SwingUtilities.invokeLater(() -> {
-            Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-            attributes.put(TextAttribute.TRACKING, 0.25);
-
-            phonenumberLabel.setFont(phonenumberLabel.getFont().deriveFont(attributes));
-        });
+        spacing(phonenumberLabel);
         phonenumberLabel.setBounds(40, 194, 130, 40);
         phonenumberLabel.setFont(new Font("Actor", Font.PLAIN, 9));
         phonenumberLabel.setForeground(new Color(13, 77, 140));
@@ -186,12 +175,7 @@ public class RegistrationForm extends JFrame{
         age.setBounds(200, 226, 145, 25);
         age.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         loginPanelRight.add(ageLabel);
-        SwingUtilities.invokeLater(() -> {
-            Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-            attributes.put(TextAttribute.TRACKING, 0.25);
-
-            ageLabel.setFont(ageLabel.getFont().deriveFont(attributes));
-        });
+        spacing(ageLabel);
         ageLabel.setBounds(200, 194, 80, 40);
         ageLabel.setFont(new Font("Actor", Font.PLAIN, 9));
         ageLabel.setForeground(new Color(13, 77, 140));
@@ -200,12 +184,7 @@ public class RegistrationForm extends JFrame{
         email.setBounds(40, 280, 145, 25);
         email.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         loginPanelRight.add(emailLabel);
-        SwingUtilities.invokeLater(() -> {
-            Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-            attributes.put(TextAttribute.TRACKING, 0.25);
-
-            emailLabel.setFont(emailLabel.getFont().deriveFont(attributes));
-        });
+        spacing(emailLabel);
         emailLabel.setBounds(40, 248, 130, 40);
         emailLabel.setFont(new Font("Actor", Font.PLAIN, 9));
         emailLabel.setForeground(new Color(13, 77, 140));
@@ -213,25 +192,14 @@ public class RegistrationForm extends JFrame{
         loginPanelRight.add(username);
         username.setBounds(200, 280, 145, 25); // adjust spacing
         username.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        // This sets letter spacing to our JLabel Texts, I got this from stack overflow. Feel free to utilize this code snippet
-        SwingUtilities.invokeLater(() -> {
-            Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-            attributes.put(TextAttribute.TRACKING, 0.25);
-
-            usernameLabel.setFont(usernameLabel.getFont().deriveFont(attributes));
-        });
+        spacing(usernameLabel);
         loginPanelRight.add(usernameLabel);
         usernameLabel.setBounds(200, 248, 110, 40);
         usernameLabel.setForeground(new Color(13,77,140));    // change color on user name label me 
         usernameLabel.setFont(new Font("Actor", Font.PLAIN, 9));
         // PASSWORD LABEL and TEXTFIELD
         // This sets letter spacing to our JLabel Texts, I got this from stack overflow. Feel free to utilize this code snippet
-        SwingUtilities.invokeLater(() -> {
-            Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-            attributes.put(TextAttribute.TRACKING, 0.25);
-
-            passwordLabel.setFont(passwordLabel.getFont().deriveFont(attributes));
-        });
+        spacing(passwordLabel);
         loginPanelRight.add(passwordLabel);
         passwordLabel.setBounds(40, 302, 111, 40);
         passwordLabel.setForeground(new Color(13,77,140));      // Change color on password label  me
@@ -257,6 +225,7 @@ public class RegistrationForm extends JFrame{
                 setCursor(Cursor.getDefaultCursor());
             }
         });
+        
 
         loginPanelRight.add(viewPassword);
         viewPassword.setIcon(View);
@@ -285,12 +254,7 @@ public class RegistrationForm extends JFrame{
 
         // CONFIRMATION PASSWORD LABEL and TEXTFIELD
         // This sets letter spacing to our JLabel Texts, I got this from stack overflow. Feel free to utilize this code snippet
-        SwingUtilities.invokeLater(() -> {
-            Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-            attributes.put(TextAttribute.TRACKING, 0.25);
-
-            confirmpassLabel.setFont(confirmpassLabel.getFont().deriveFont(attributes));
-        });
+        spacing(confirmpassLabel);
         loginPanelRight.add(confirmpassLabel);
         confirmpassLabel.setBounds(200, 302, 135, 40);
         confirmpassLabel.setForeground(new Color(13,77,140));
@@ -392,184 +356,50 @@ public class RegistrationForm extends JFrame{
         phonenumber.setBorder(compoundBorder);
         age.setBorder(compoundBorder);
         email.setBorder(compoundBorder);
-
+        
         // Add placeholder text for first name
         fname.setForeground(new Color(100, 178, 255));
-        String fnamePH = "Enter first name"; 
         fname.setText(fnamePH);
 
         // Placeholder text for last name
         lname.setForeground(new Color(100, 178, 255));
-        String lnamePH = "Enter last name";
         lname.setText(lnamePH);
         
         // Placeholder text for PHONE NUMBER
         phonenumber.setForeground(new Color(100, 178, 255));
-        String phonenumberPH = "Enter phone number";
         phonenumber.setText(phonenumberPH);
 
         // Placeholder para sa AGE
         age.setForeground(new Color(100, 178, 255));
-        String agePH = "Enter age";
         age.setText(agePH);
 
         // Placeholder text for EMAIL ADDRESS
         email.setForeground(new Color(100, 178, 255));
-        String emailPH = "Enter email address";
         email.setText(emailPH);
 
         // Add placeholder text for username field
         username.setForeground(new Color(100,178,255));
-        String usernamePH = "Enter username";
         username.setText(usernamePH);
-
+        
         // Add placeholder text for password field
         password.setForeground(new Color(100,178,255));
         password.setEchoChar((char) 0); // Set echo char to zero to show plain text
-        String passwordPH = "Enter password";
         password.setText(passwordPH);
-
+  
         // Add placeholder text for confirmation password
-        confirmpass.setForeground(new Color(100, 178, 255));
+        confirmpass.setForeground(placeholderColor);
         confirmpass.setEchoChar((char) 0);
-        String confirmpassPH = "Enter password";
         confirmpass.setText(confirmpassPH);
         
-     // Add focus listeners to the text fields
-        username.addFocusListener(new FocusAdapter() {
-        @Override
-        public void focusGained(FocusEvent e) {
-            if (username.getText().equals("Enter username")) { // if ma click na ang field, mawala ang placeholder
-                username.setText("");
-                username.setForeground(Color.BLACK);
-            }
-        }
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (username.getText().isEmpty()) { // If di ma click ang field, display placeholder
-                username.setText("Enter username");
-                username.setForeground(new Color(100,178,255)); // Color sa placeholder
-            }
-        }
-        });
-        password.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) { // If ma click na gali ang input field mawala ang placeholder
-                if (password.getText().equals("Enter password")) {
-                    password.setText("");
-                    password.setForeground(Color.BLACK);
-                    password.setEchoChar('*'); // Ang echoChar e set nato balik og '*' kay para ma encrypted ang pass sa user
-                }							   // gi EchoChar(0) man nato sya pag declare sa taas para di ma encrypt and placeholder
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) { // If di ma click ang input field, mo display ang "Enter password" na placeholder
-                if (password.getText().isEmpty()) {
-                    password.setForeground(new Color(100,178,255)); // Color sa placeholder
-                    password.setEchoChar((char)0);		// This sets the encrypted text of the JPasswordField to a plain/readable text
-                    password.setText("Enter password");
-                }
-            }
-        });
-        confirmpass.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) { // If ma click na gali ang input field mawala ang placeholder
-                if (confirmpass.getText().equals("Enter password")) {
-                    confirmpass.setText("");
-                    confirmpass.setForeground(Color.BLACK);
-                    confirmpass.setEchoChar('*'); // Ang echoChar e set nato balik og '*' kay para ma encrypted ang pass sa user
-                }							   // gi EchoChar(0) man nato sya pag declare sa taas para di ma encrypt and placeholder
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) { // If di ma click ang input field, mo display ang "Enter password" na placeholder
-                if (confirmpass.getText().isEmpty()) {
-                    confirmpass.setForeground(new Color(100,178,255)); // Color sa placeholder
-                    confirmpass.setEchoChar((char)0);		// This sets the encrypted text of the JPasswordField to a plain/readable text
-                    confirmpass.setText("Enter password");
-                }
-            }
-        });
-        fname.addFocusListener(new FocusAdapter() {
-        @Override
-        public void focusGained(FocusEvent e) {
-            if (fname.getText().equals("Enter first name")) { // if ma click na ang field, mawala ang placeholder
-                fname.setText("");
-                fname.setForeground(Color.BLACK);
-            }
-        }
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (fname.getText().isEmpty()) { // If di ma click ang field, display placeholder
-                fname.setText("Enter first name");
-                fname.setForeground(new Color(100,178,255)); // Color sa placeholder
-            }
-        }
-        });
-        lname.addFocusListener(new FocusAdapter() {
-        @Override
-        public void focusGained(FocusEvent e) {
-            if (lname.getText().equals("Enter last name")) { // if ma click na ang field, mawala ang placeholder
-                lname.setText("");
-                lname.setForeground(Color.BLACK);
-            }
-        }
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (lname.getText().isEmpty()) { // If di ma click ang field, display placeholder
-                lname.setText("Enter last name");
-                lname.setForeground(new Color(100,178,255)); // Color sa placeholder
-            }
-        }
-        });
-        phonenumber.addFocusListener(new FocusAdapter() {
-        @Override
-        public void focusGained(FocusEvent e) {
-            if (phonenumber.getText().equals("Enter phone number")) { // if ma click na ang field, mawala ang placeholder
-                phonenumber.setText("");
-                phonenumber.setForeground(Color.BLACK);
-            }
-        }
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (phonenumber.getText().isEmpty()) { // If di ma click ang field, display placeholder
-                phonenumber.setText("Enter phone number");
-                phonenumber.setForeground(new Color(100,178,255)); // Color sa placeholder
-            }
-        }
-        });
-        age.addFocusListener(new FocusAdapter() {
-        @Override
-        public void focusGained(FocusEvent e) {
-            if (age.getText().equals("Enter age")) { // if ma click na ang field, mawala ang placeholder
-                age.setText("");
-                age.setForeground(Color.BLACK);
-            }
-        }
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (age.getText().isEmpty()) { // If di ma click ang field, display placeholder
-                age.setText("Enter age");
-                age.setForeground(new Color(100,178,255)); // Color sa placeholder
-            }
-        }
-        });
-        email.addFocusListener(new FocusAdapter() {
-        @Override
-        public void focusGained(FocusEvent e) {
-            if (email.getText().equals("Enter email address")) { // if ma click na ang field, mawala ang placeholder
-                email.setText("");
-                email.setForeground(Color.BLACK);
-            }
-        }
-        @Override
-        public void focusLost(FocusEvent e) {
-            if (email.getText().isEmpty()) { // If di ma click ang field, display placeholder
-                email.setText("Enter email address");
-                email.setForeground(new Color(100,178,255)); // Color sa placeholder
-            }
-        }
-        });
+        // Focus Listener na Func naas pinaka ubos
+        focusListenerFuncPass(password, passwordPH);
+        focusListenerFuncPass(confirmpass, passwordPH);
+        focusListenerFunc(username, usernamePH);
+        focusListenerFunc(fname, fnamePH);
+        focusListenerFunc(lname, lnamePH);
+        focusListenerFunc(phonenumber, phonenumberPH);
+        focusListenerFunc(age, agePH);
+        focusListenerFunc(email, emailPH);
     	registerButton.addActionListener(new ActionListener() {
         
            		@Override
@@ -579,29 +409,26 @@ public class RegistrationForm extends JFrame{
            				if(!fname.getText().equals(fnamePH) && !lname.getText().equals(lnamePH) && !phonenumber.getText().equals(phonenumberPH)
            						&& !age.getText().equals(agePH) && !email.equals(emailPH) && !username.getText().equals(usernamePH) && !password.getText().equals(passwordPH) && !confirmpass.getText().equals(confirmpassPH)) {
            			
-           					localfname = fname.getText();
-           					locallname = lname.getText();
-           					localphonenumber = phonenumber.getText();
-           					localemail = email.getText();
-           					String ageconvert = age.getText();
-           					localage = Integer.parseInt(ageconvert);
-           					user = username.getText();
-           					pass = password.getText();
-           					createFolder();
-           					readFile();
-           					countLines();
-           					addData(user,pass,localemail);
-           					registerButton.setText("SUCCESS!");
-           					registerButton.setForeground(Color.GREEN);
-           					try {
-								Thread.sleep(1000);
-								dispose();
-	           					new LodgeHubLoginFrame();
-							} catch (InterruptedException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-       
+           					if(!password.getText().equals(confirmpass.getText())) {
+           						JOptionPane.showMessageDialog(null, "Password do not match!", "LodgeHub", JOptionPane.ERROR_MESSAGE);
+           					}
+           					else {
+	           					localfname = fname.getText();
+	           					locallname = lname.getText();
+	           					localphonenumber = phonenumber.getText();
+	           					localemail = email.getText();
+	           					String ageconvert = age.getText();
+	           					localage = Integer.parseInt(ageconvert);
+	           					user = username.getText();
+	           					pass = password.getText();
+	           					backend.createFolder();
+	           					backend.readFile();
+	           					backend.countLines();
+	           					backend.addData(user,pass,localemail);
+	           					JOptionPane.showMessageDialog(null, "REGISTERED!", "LodgeHub", JOptionPane.INFORMATION_MESSAGE);
+	           					dispose();
+		           				new LodgeHubLoginFrame();   
+           					}
            				}
            				else {
            					JOptionPane.showMessageDialog(null, "Please fill-in empty fields", "LodgeHub", JOptionPane.WARNING_MESSAGE);
@@ -611,100 +438,100 @@ public class RegistrationForm extends JFrame{
            		}
                	 
                 });
+    	registerButtonEnter(confirmpass);
         return loginPanelRight;          
     }
- // REGISTER THE USER'S CREDENTIALS
-    // If folder doesn't exist, create new folder
-    void createFolder() {
-    	if(!f.exists()) {
-    		f.mkdirs();
-    	}
-    }
-    // Checks if file exist, if not create file
-    void readFile() {
-    	try {
-			FileReader fr = new FileReader(f+"\\accounts.txt");
-			System.out .println("file exists!");
-		} catch (FileNotFoundException ex) {
-			try {
-				FileWriter fw = new FileWriter(f+"\\accounts.txt");
-				System.out.println("File created!");
-			} catch (IOException ex1) {
-				Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex1);
-			}
-			
-		}
-    }
-    // Add data to Text file, user, pass and email
-    void addData(String usr, String pswd, String mail) {
-    	try {
-			RandomAccessFile raf = new RandomAccessFile(f+"\\accounts.txt", "rw");
-			for(int i = 0; i < ln; i++) {
-				raf.readLine(); 
-			}		
-			raf.writeBytes("Username:" + usr + "\r\n");
-			raf.writeBytes("Password:" + pswd + "\r\n");
-			raf.writeBytes("Email:" + mail);
-			raf.writeBytes("\r\n");
-			raf.writeBytes("\r\n");
-		} catch (FileNotFoundException ex) {
-			Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex);
-		} catch (IOException ex) {
-			Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex);
-		}
-    }
-    // Count lines, i think lines is every user's info like line 1 composed of user 1's user pass and email
-    void countLines() {   	
-    	try {
-    		ln = 1;
-			RandomAccessFile raf = new RandomAccessFile(f+"\\accounts.txt", "rw");
-			for(int i = 0;raf.readLine()!=null;i++) {
-				ln++;
-			}
-			System.out.println("number of lines: " + ln);
-		} catch (FileNotFoundException ex) {
-			System.out.println("1");
-			Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex);
-		} catch (IOException ex) {
-			System.out.println("2");
-			Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex);
-		}
-    }
-    // This checks the data inputted in the login user and pass if it matches or not, dire ang naay error
-    // If sayop na user og pass imong ibutang sa login supposedly mo display incorrect user/pass
-    // Nya dili man, Calida try to find out ngano ni, after nimo ma solve e remove ni na comment nya ipabilin ang 
-    // info about ani nga method
-    void logic(String usr, String pswd) {
-    	try {
-			RandomAccessFile raf = new RandomAccessFile(f + "\\accounts.txt", "rw");
-			for(int i = 0; i < ln; i+=4) {
-				System.out.println("count " + i);
-				String forUser = raf.readLine().substring(9);
-				String forPass = raf.readLine().substring(9);
-				if(usr.equals(forUser) & pswd.equals(forPass)) {
-					JOptionPane.showMessageDialog(null, "Login Successful!");
-					break;
-				}
-				else if(i==ln-3)
-					JOptionPane.showMessageDialog(null, "Invalid User/Password");
-				
-				for(int k =1; k <= 2; k++) {
-					raf.readLine();
-				}
-				
-			}
-		} catch (FileNotFoundException ex) {
-			System.out.println("1");
-			Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex);
-		} catch (IOException ex) {
-			System.out.println("2");
-			Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE,null, ex);
-		}
+     
+    public void focusListenerFuncPass(JPasswordField passfields, String fieldLabels) {
+    	passfields.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) { // If ma click na gali ang input field mawala ang placeholder
+                if (passfields.getText().equals(fieldLabels)) {
+                	passfields.setText("");
+                	passfields.setForeground(Color.BLACK);
+                	passfields.setEchoChar('*'); // Ang echoChar e set nato balik og '*' kay para ma encrypted ang pass sa user
+                }							   // gi EchoChar(0) man nato sya pag declare sa taas para di ma encrypt and placeholder
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) { // If di ma click ang input field, mo display ang "Enter password" na placeholder
+                if (passfields.getText().isEmpty()) {
+                	passfields.setForeground(new Color(100,178,255)); // Color sa placeholder
+                	passfields.setEchoChar((char)0);		// This sets the encrypted text of the JPasswordField to a plain/readable text
+                	passfields.setText(fieldLabels);
+                }
+            }
+        });
     	
-    	/**
-    	 * TO DO:
-    	 * - Indicator na successful ang pagka register
-    	 */
     }
-      
+    public void focusListenerFunc(JTextField textfields, String fieldLabel) {
+	    textfields.addFocusListener(new FocusAdapter() {
+	        @Override
+	        public void focusGained(FocusEvent e) {
+	            if (textfields.getText().equals(fieldLabel)) { // if ma click na ang field, mawala ang placeholder
+	            	textfields.setText("");
+	            	textfields.setForeground(Color.BLACK);
+	            }
+	        }
+	        @Override
+	        public void focusLost(FocusEvent e) {
+	            if (textfields.getText().isEmpty()) { // If di ma click ang field, display placeholder
+	            	textfields.setText(fieldLabel);
+	            	textfields.setForeground(new Color(100,178,255)); // Color sa placeholder
+	            }
+	        }
+	        });
+    }
+    
+    public void spacing(JLabel textfieldLabel) {
+    	SwingUtilities.invokeLater(() -> {
+            Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
+            attributes.put(TextAttribute.TRACKING, 0.25);
+
+            textfieldLabel.setFont(usernameLabel.getFont().deriveFont(attributes));
+        });
+    }
+    
+    public void registerButtonEnter(JPasswordField field) {
+		// If user enters ENTER button, username and password will be stored and compares it if it's the same as the registeredUser and pass
+    	// if it is then the program proceeds to output a demo main interface, else it displays invalid user/pass
+        field.addKeyListener(new KeyAdapter() {
+        	public void keyPressed(KeyEvent e) {
+        		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+        			if(!fname.getText().equals(fnamePH) && !lname.getText().equals(lnamePH) && !phonenumber.getText().equals(phonenumberPH)
+       						&& !age.getText().equals(agePH) && !email.equals(emailPH) && !username.getText().equals(usernamePH) && !password.getText().equals(passwordPH) && !confirmpass.getText().equals(confirmpassPH)) {
+       			
+       					localfname = fname.getText();
+       					locallname = lname.getText();
+       					localphonenumber = phonenumber.getText();
+       					localemail = email.getText();
+       					String ageconvert = age.getText();
+       					localage = Integer.parseInt(ageconvert);
+       					user = username.getText();
+       					pass = password.getText();
+       					backend.createFolder();
+       					backend.readFile();
+       					backend.countLines();
+       					backend.addData(user,pass,localemail);
+       					registerButton.setText("SUCCESS!");
+       					registerButton.setForeground(Color.GREEN);
+       					try {
+							Thread.sleep(1000);
+							dispose();
+           					new LodgeHubLoginFrame();
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+   
+       				}
+       				else {
+       					JOptionPane.showMessageDialog(null, "Please fill-in empty fields", "LodgeHub", JOptionPane.WARNING_MESSAGE);
+       				}
+        			
+        		}
+        	}
+        });
+	}
+    
 }
