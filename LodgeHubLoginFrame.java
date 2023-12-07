@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 public class LodgeHubLoginFrame extends JFrame implements ActionListener{
 	RegistrationForm register = new RegistrationForm();
+	RegistrationBackend backend = new RegistrationBackend();
 	RegisteredAccounts accounts;
 	String registeredUser = " ";
 	String registeredPassword = " ";
@@ -107,7 +108,6 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
 		return loginPanelLeft;
 	}
 	
-
 	// Right Panel for Log-in Interface
     public JPanel rightPanel() {
         loginPanelRight.add(logo);
@@ -117,111 +117,13 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
         loginPanelRight.setPreferredSize(new Dimension(364, 667));
         loginPanelRight.setBackground(new Color(217,217,217));
         loginPanelRight.setLayout(null);
-
-        // USERNAME LABEL
-        // This sets letter spacing to our JLabel Texts, I got this from stack overflow. Feel free to utilize this code snippet
-        SwingUtilities.invokeLater(() -> {
-            Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-            attributes.put(TextAttribute.TRACKING, 0.25);
-
-            usernameLabel.setFont(usernameLabel.getFont().deriveFont(attributes));
-        });
-        loginPanelRight.add(usernameLabel);
-        usernameLabel.setBounds(83, 238, 110, 40);
-        usernameLabel.setForeground(new Color(13,77,140));    // change color on user name label me 
-        usernameLabel.setFont(new Font("Actor", Font.PLAIN, 12));
-
-        // USERNAME TEXTFIELD
-        loginPanelRight.add(username);
-        username.setBounds(80, 270, 233, 41); // adjust spacing
-        username.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-
-        // PASSWORD LABEL
-        // This sets letter spacing to our JLabel Texts, I got this from stack overflow. Feel free to utilize this code snippet
-        SwingUtilities.invokeLater(() -> {
-            Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-            attributes.put(TextAttribute.TRACKING, 0.25);
-
-            passwordLabel.setFont(passwordLabel.getFont().deriveFont(attributes));
-        });
-        loginPanelRight.add(passwordLabel);
-        passwordLabel.setBounds(83, 338, 111, 40);
-        passwordLabel.setForeground(new Color(13,77,140));      // Change color on password label  me
-        passwordLabel.setFont(new Font("Actor", Font.PLAIN, 12)); // change into Plain color me size it for 15
-
-        // PASSWORD TEXTFIELD
-        loginPanelRight.add(password);
-        password.setBounds(80, 370, 233, 41);
-        password.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-     // If user enters ENTER button, username and password will be stored and compares it if it's the same as the registeredUser and pass
-    	// if it is then the program proceeds to output a demo main interface, else it displays invalid user/pass
-        password.addKeyListener(new KeyAdapter() {
-        	public void keyPressed(KeyEvent e) {
-        		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-        			usernameVar = username.getText();
-        			passwordVar = password.getText();
-        			register.createFolder();
-        			register.readFile();
-        			register.countLines();
-        			register.logic(usernameVar,passwordVar);
-        			
-        		}
-        	}
-        });
-         
-
-        // LOGIN BUTTON
-        loginPanelRight.add(loginButton);
-        loginButton.setBounds(125, 438, 148, 40);
-        loginButton.setBackground(new Color(13, 77, 140));
-        loginButton.setForeground(new Color(255, 255, 255));
-        loginButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        loginButton.setFocusable(false);
-        loginButton.addActionListener(this);;
-        
-     // New Account? Register here
-        JLabel copyright = new JLabel("©2023 LodgeFinder. All rights reserved");
-        JLabel greenHere = new JLabel("here");
-        copyright.setFont(new Font("Poppins", Font.PLAIN, 8));
-        copyright.setBounds(135,520,160,160);
-        greenHere.setForeground(new Color(100,178,255));
-        greenHere.setBounds(268,510,40,40);
-        greenHere.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        loginPanelRight.add(copyright);
-        loginPanelRight.add(registerHere);
-        loginPanelRight.add(greenHere);
-        registerHere.setBounds(110, 430, 200, 200);
-        registerHere.setForeground(new Color(62,56,56));
-        registerHere.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        greenHere.addMouseListener(new MouseAdapter() {
-        	public void mouseClicked(MouseEvent e) {
-        		if(e.getSource() == greenHere) {
-        			dispose();
-        			register.openRegister();
-        		}
-        	}
-        		// if user hovers over highlighted "here" button it will change cursor to hand
-        	 @Override
-             public void mouseEntered(MouseEvent e) {
-                 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-             }
-        	// if user stops hover over highlighted "here" button it will change hand cursor to default
-             @Override
-             public void mouseExited(MouseEvent e) {
-                 setCursor(Cursor.getDefaultCursor());
-             }
-        });
         
         Border blueLineBorder = new LineBorder(new Color(50, 89, 127), 2, true);
-        Border emptyBorder = new EmptyBorder(0, 8, 0, 8); // adjust padding on up and down. >>>>>>>>>>>>>>>>>>>
+        Border emptyBorder = new EmptyBorder(0, 8, 0, 8); // adjust padding on up and down.
         Border compoundBorder = new CompoundBorder(blueLineBorder, emptyBorder);
         username.setBorder(compoundBorder);
         password.setBorder(compoundBorder);
         
-        // Add placeholder text for username field
-        username.setForeground(new Color(100,178,255));
-        username.setFont(new Font("Segoe UI", Font.PLAIN, 15)); // Set font size
-        username.setText("Enter username");
 
         // Add placeholder text for password field
         password.setForeground(new Color(100,178,255));
@@ -229,7 +131,7 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
         password.setEchoChar((char) 0); // Set echo char to zero to show plain text
         password.setText("Enter password");
         
-     // Add focus listeners to the text fields
+      //Add focus listeners to the text fields
         username.addFocusListener(new FocusAdapter() {
         @Override
         public void focusGained(FocusEvent e) {
@@ -266,10 +168,110 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
                 }
             }
         });
+        registerMethod();
+        loginButton();
+        loginButtonEnter();
+        passwordTextFont();
+        passwordLabelSpacing();
+        usernameTextField();
+        usernameLabelSpacing();
+        usernameTextFont();
         return loginPanelRight; 
     }
+    
+    public void spacing(JLabel textfieldLabel) {
+    	SwingUtilities.invokeLater(() -> {
+            Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
+            attributes.put(TextAttribute.TRACKING, 0.25);
 
-	
+            textfieldLabel.setFont(usernameLabel.getFont().deriveFont(attributes));
+        });
+    }
+    // New Account? Register here
+    public void registerMethod() {
+    	JLabel copyright = new JLabel("©2023 LodgeFinder. All rights reserved");
+        JLabel greenHere = new JLabel("here");
+        copyright.setFont(new Font("Poppins", Font.PLAIN, 8));
+        copyright.setBounds(135,520,160,160);
+        greenHere.setForeground(new Color(100,178,255));
+        greenHere.setBounds(268,510,40,40);
+        greenHere.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        loginPanelRight.add(copyright);
+        loginPanelRight.add(registerHere);
+        loginPanelRight.add(greenHere);
+        registerHere.setBounds(110, 430, 200, 200);
+        registerHere.setForeground(new Color(62,56,56));
+        registerHere.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        greenHere.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        		if(e.getSource() == greenHere) {
+        			dispose();
+        			register.openRegister();
+        		}
+        	}
+        		// if user hovers over highlighted "here" button it will change cursor to hand
+        	 @Override
+             public void mouseEntered(MouseEvent e) {
+                 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+             }
+        	// if user stops hover over highlighted "here" button it will change hand cursor to default
+             @Override
+             public void mouseExited(MouseEvent e) {
+                 setCursor(Cursor.getDefaultCursor());
+             }
+        });
+    }
+ 
+    // LOGIN BUTTON
+    public void loginButton() {
+    	loginPanelRight.add(loginButton);
+        loginButton.setBounds(125, 438, 148, 40);
+        loginButton.setBackground(new Color(13, 77, 140));
+        loginButton.setForeground(new Color(255, 255, 255));
+        loginButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        loginButton.setFocusable(false);
+        loginButton.addActionListener(this);
+    }
+      
+    // PASSWORD TEXTFIELD
+    public void passwordTextFont() {
+    	loginPanelRight.add(password);
+        password.setBounds(80, 370, 233, 41);
+        password.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+    }
+    
+    // PASSWORD LABEL Spacing
+    public void passwordLabelSpacing() {
+    	// This sets letter spacing to our JLabel Texts, I got this from stack overflow. Feel free to utilize this code snippet
+        spacing(passwordLabel);
+        loginPanelRight.add(passwordLabel);
+        passwordLabel.setBounds(83, 338, 111, 40);
+        passwordLabel.setForeground(new Color(13,77,140));      // Change color on password label  me
+        passwordLabel.setFont(new Font("Actor", Font.PLAIN, 12)); // change into Plain color me size it for 15
+    }
+       
+    // USERNAME TEXTFIELD
+    public void usernameTextField() {
+    	loginPanelRight.add(username);
+        username.setBounds(80, 270, 233, 41); // adjust spacing
+        username.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+    }
+    
+    // USERNAME LABEL
+    public void usernameLabelSpacing() {
+    	spacing(usernameLabel);
+        loginPanelRight.add(usernameLabel);
+        usernameLabel.setBounds(83, 238, 110, 40);
+        usernameLabel.setForeground(new Color(13,77,140));    // change color on user name label me 
+        usernameLabel.setFont(new Font("Actor", Font.PLAIN, 12));
+    }
+    
+    // Add placeholder text for username field
+    public void usernameTextFont() {
+    	username.setForeground(new Color(100,178,255));
+        username.setFont(new Font("Segoe UI", Font.PLAIN, 15)); // Set font size
+        username.setText("Enter username");
+    }
 
 	// If user clicks button, username and password will be stored and compares it if it's the same as the registeredUser and pass
 	// if it is then the program proceeds to output a demo main interface, else it displays invalid user/pass
@@ -277,14 +279,29 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if(source==loginButton) {
-			usernameVar = username.getText();
-			passwordVar = password.getText();
-			register.createFolder();
-			register.readFile();
-			register.countLines();
-			register.logic(usernameVar,passwordVar);
-			// duha ni kabuok, ang mga click sa method og ang enter key, naas line 159
+			loginButtonUserPass();
+			// duha ni kabuok, ang mga click sa method og ang enter key, naas line 
 		}		
 	}
 	
+	public void loginButtonUserPass() {
+		backend.createFolder();
+		backend.readFile();
+		backend.countLines();
+		backend.logic(username.getText(),password.getText());
+		dispose();
+	}
+	
+	public void loginButtonEnter() {
+		// If user enters ENTER button, username and password will be stored and compares it if it's the same as the registeredUser and pass
+    	// if it is then the program proceeds to output a demo main interface, else it displays invalid user/pass
+        password.addKeyListener(new KeyAdapter() {
+        	public void keyPressed(KeyEvent e) {
+        		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+        			loginButtonUserPass();
+        		}
+        	}
+        });
+	}
+		
 }
