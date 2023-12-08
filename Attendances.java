@@ -27,5 +27,6 @@ public class Attendances {
 			writer.write("▢ " + attend.get(i)+"\n"); // we write the data from the LinkedList to the Attendance.txt file, we added "\n" for a new line in every username
 		}
 		writer.close();
+		sc.close();
 	}
 }
