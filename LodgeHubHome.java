@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -7,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,7 +21,6 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class LodgeHubHome extends JFrame {
@@ -45,11 +47,17 @@ public class LodgeHubHome extends JFrame {
     JComboBox dropdown = new JComboBox<>(barangays);
     JButton btn = new LodgeButton();
     ImageIcon searchButton = new ImageIcon("Image/searchLodge.png");
-
-    
     
     // USER INTERFACE
     JPanel userProfileContainer;
+    JLabel titleAndQuote = new JLabel(); // TITLE and QUOTE BACKGROUND SA USER INTERFACE WHAT I MEAN SA TITLE IS KANANG NAA SA KINABABWAN
+    ImageIcon titleQuote = new ImageIcon("Image/titleQuote.jpg"); // IMAGE SA TITLE AND QUOTE
+    JLabel backgroundPic = new JLabel(); // BACKGROUND PICTURE WITH LOW EXPOSURE
+    ImageIcon bgPic = new ImageIcon("Image/bgPic.jpg"); // IMAGE SA BACKGROUND LOW EXPO
+    JPanel userName = new JPanel(); // Panel for user's name email and picture
+    JPanel about = new JPanel(); // Panel for user's personal details
+    JPanel booking = new JPanel(); // Panel for booking
+    JPanel schedule = new JPanel(); // Panel para schedule
     
     // FAVORITES INTERFACE
     JPanel favContainer;
@@ -180,11 +188,36 @@ public class LodgeHubHome extends JFrame {
     	userProfileContainer = new JPanel();
     	userProfileContainer.setPreferredSize(new Dimension(1208,969));
     	userProfileContainer.setBounds(190, 0, 1195, 900);
-    	//userProfileContainer.add(homeBackground);
-    	//userProfileContainer.add(locationBox);
-    	userProfileContainer.setBackground(Color.red);
     	userProfileContainer.setLayout(null);
     	userProfileContainer.setVisible(false);
+        userProfileContainer.add(titleAndQuote);
+        userProfileContainer.add(backgroundPic);
+        //TITLE AND BACKGROUND PICTURE
+        titleAndQuote.setIcon(resizeImageIcon(titleQuote, 1039, 119));
+        titleAndQuote.setBounds(15, 0, 1039, 119);
+        backgroundPic.setIcon(resizeImageIcon(bgPic, 1039, 584));
+        backgroundPic.setBounds(15,128, 1039, 584);
+        backgroundPic.add(userName);
+        backgroundPic.add(about);
+        backgroundPic.add(booking);
+        backgroundPic.add(schedule);
+        //PANEL FOR USER'S NAME EMAIL AND PICTURE WITH WHITE BACKGROUND
+        userName.setBounds(0, 215, 585, 124);
+        userName.setBackground(Color.WHITE);
+        userName.setBorder(BorderFactory.createMatteBorder(5,0,0,0, new Color(13, 77, 140))); // Creates top border
+        
+        //PANEL FOR USER'S PERSONAL DETAILS
+        about.setBounds(0, 339, 585, 245);
+        about.setBackground(new Color(13, 77, 140));
+
+        //PANEL FOR A BOOKING
+        booking.setBounds(585, 0, 454, 449);
+        booking.setBackground(new Color(217, 217, 217));
+
+        //PANEL FOR SCHEDULES
+        schedule.setBounds(585, 449, 454, 135);
+        schedule.setBackground(new Color(100, 178, 255));
+
     	
     	return userProfileContainer;
     }
