@@ -1,26 +1,21 @@
-package trashcash;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.TextAttribute;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class LodgeHubLoginFrame extends JFrame implements ActionListener{
+public class LodgeHubLoginFrame extends JFrame{
 	RegistrationForm register = new RegistrationForm();
 	RegistrationBackend backend = new RegistrationBackend();
-	RegisteredAccounts accounts;
 	String registeredUser = " ";
 	String registeredPassword = " ";
 	String Username, Password, Email;
+	
 	final int FRAME_SIZE_WIDTH = 833;
 	final int FRAME_SIZE_HEIGHT = 653;
+	
 	private String usernameVar = " ", passwordVar = " ";
 	
 	
@@ -31,6 +26,9 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
 	//ImageIcon
 	ImageIcon LodgeFinderIcon = new ImageIcon("LodgeHubIcon.png");
 	ImageIcon LodgeFinder = resizeImageLogo("LodgeHub.png", 260,260);
+	ImageIcon View = new ImageIcon("View.png");
+    ImageIcon Hide = new ImageIcon("Hide.png");
+    
 	//ImageIcon Background = new ImageIcon("trashCashBG.jpg");
 	int desiredWidth = 477; // Set your desired width
 	int desiredHeight = 667; // Set your desired height
@@ -50,7 +48,6 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
         return new ImageIcon(newImage); // transform it back
     }
 
-	
 
 	//JLabel for Right Panel
 	JLabel logo = new JLabel();
@@ -58,6 +55,7 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
 	JLabel usernameLabel = new JLabel("USERNAME");
 	JLabel passwordLabel = new JLabel("PASSWORD");
 	JLabel registerHere = new JLabel("New Account? Register ");
+	JLabel viewPassword,hidePassword;
 	Border empty = new EmptyBorder(0, 0, 0, 0);
 	
 
@@ -168,6 +166,7 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
                 }
             }
         });
+        hideViewPass();
         registerMethod();
         loginButton();
         loginButtonEnter();
@@ -230,8 +229,28 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
         loginButton.setForeground(new Color(255, 255, 255));
         loginButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         loginButton.setFocusable(false);
-        loginButton.addActionListener(this);
-    }
+       // loginButton.addActionListener(this);
+        loginButton.addMouseListener(new MouseAdapter() {
+        		public void mouseClicked(MouseEvent e) {
+        			if(e.getSource() == loginButton) {
+        				loginButtonUserPass();
+        			
+        			}
+        		}
+        		@Override
+        	     public void mouseEntered(MouseEvent e) {
+        			loginButton.setBackground(new Color(19, 112, 204));
+        			setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        	     }
+        	        
+        	    @Override
+        	    public void mouseExited(MouseEvent e) {
+        	    	 loginButton.setBackground(new Color(13, 77, 140));
+        	    	 setCursor(Cursor.getDefaultCursor());
+        	    }
+        	});
+     }
+ 
       
     // PASSWORD TEXTFIELD
     public void passwordTextFont() {
@@ -272,17 +291,6 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
         username.setFont(new Font("Segoe UI", Font.PLAIN, 15)); // Set font size
         username.setText("Enter username");
     }
-
-	// If user clicks button, username and password will be stored and compares it if it's the same as the registeredUser and pass
-	// if it is then the program proceeds to output a demo main interface, else it displays invalid user/pass
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object source = e.getSource();
-		if(source==loginButton) {
-			loginButtonUserPass();
-			// duha ni kabuok, ang mga click sa method og ang enter key, naas line 
-		}		
-	}
 	
 	public void loginButtonUserPass() {
 		backend.createFolder();
@@ -302,6 +310,53 @@ public class LodgeHubLoginFrame extends JFrame implements ActionListener{
         		}
         	}
         });
+	}
+	
+	public void hideViewPass() {
+		 viewPassword = new JLabel();
+		 hidePassword = new JLabel();
+		// EYE ICON TO SHOW OR HIDE PASSWORD ASTERISK;
+		loginPanelRight.add(hidePassword);
+	    hidePassword.setIcon(Hide);
+	    hidePassword.setBounds(280, 383, 18, 18);
+	    hidePassword.addMouseListener(new MouseAdapter() {
+	        public void mousePressed(MouseEvent e) {
+	            hidePassword.setVisible(false);
+	            viewPassword.setVisible(true);
+	            password.setEchoChar((char)0);
+	        }
+	        @Override
+	        public void mouseEntered(MouseEvent e) {
+	            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+	        }
+	        
+	        @Override
+	        public void mouseExited(MouseEvent e) {
+	            setCursor(Cursor.getDefaultCursor());
+	        }
+	    });
+	    
+
+	    loginPanelRight.add(viewPassword);
+	    viewPassword.setIcon(View);
+	    viewPassword.setBounds(280, 383, 18, 18);
+	    viewPassword.setVisible(false);
+	    viewPassword.addMouseListener(new MouseAdapter() {
+	        public void mousePressed(MouseEvent e) {
+	            viewPassword.setVisible(false);
+	            hidePassword.setVisible(true);
+	            password.setEchoChar('*');
+	        };
+	        @Override
+	        public void mouseEntered(MouseEvent e) {
+	            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+	        }
+	        
+	        @Override
+	        public void mouseExited(MouseEvent e) {
+	            setCursor(Cursor.getDefaultCursor());
+	        }
+	    });
 	}
 		
 }
