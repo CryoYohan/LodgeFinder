@@ -4,16 +4,8 @@ import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.TextAttribute;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class RegistrationForm extends JFrame{
 
@@ -122,13 +114,10 @@ public class RegistrationForm extends JFrame{
 		int backgroundX = 0;  // Set your desired X coordinate
 	    int backgroundY = 0;  // Set your desired Y coordinate
 	    BackgroundPic.setIcon(Background);
-	    BackgroundPic.setBounds(backgroundX, backgroundY, desiredWidth, desiredHeight);
-	      
+	    BackgroundPic.setBounds(backgroundX, backgroundY, desiredWidth, desiredHeight);	      
 	    loginPanelLeft.add(BackgroundPic);
-
 		return loginPanelLeft;
 	}
-
 	
 	// Right Panel for Log-in Interface
     public JPanel rightPanel() {
@@ -140,70 +129,61 @@ public class RegistrationForm extends JFrame{
         loginPanelRight.setBackground(new Color(217,217,217));
         loginPanelRight.setLayout(null);
 
-        // First Name TextField and Label
-        
+        // First Name TextField and Label    
         loginPanelRight.add(fname);
         fname.setBounds(40,172,145,25);
-        fname.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        fnameLabel.setBounds(40, 140,100,40);
         loginPanelRight.add(fnameLabel);
         spacing(fnameLabel);
-        fnameLabel.setBounds(40, 140,100,40);
-        fnameLabel.setFont(new Font("Actor", Font.PLAIN, 9));
-        fnameLabel.setForeground(new Color(13, 77, 140));
+        labelsAndFieldsCustom(fnameLabel, fname);
         //TEXT FIELD AND LABEL FOR LASTNAME
         
         loginPanelRight.add(lname);
         lname.setBounds(200, 172, 145, 25);
-        lname.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lnameLabel.setBounds(200, 140, 100, 40);
         loginPanelRight.add(lnameLabel);
         spacing(lnameLabel);
-        lnameLabel.setBounds(200, 140, 100, 40);
-        lnameLabel.setFont(new Font("Actor", Font.PLAIN, 9));
-        lnameLabel.setForeground(new Color(13, 77, 140));
+        labelsAndFieldsCustom(lnameLabel, lname);
         
         // PHONE NUMBER TEXTFIELD AND LABEL
         loginPanelRight.add(phonenumber);
         phonenumber.setBounds(40, 226, 145, 25);
-        phonenumber.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        phonenumberLabel.setBounds(40, 194, 130, 40);
         loginPanelRight.add(phonenumberLabel);
         spacing(phonenumberLabel);
-        phonenumberLabel.setBounds(40, 194, 130, 40);
-        phonenumberLabel.setFont(new Font("Actor", Font.PLAIN, 9));
-        phonenumberLabel.setForeground(new Color(13, 77, 140));
+        labelsAndFieldsCustom(phonenumberLabel, phonenumber);
+        
         // AGE TEXTFIELD AND LABEL
         loginPanelRight.add(age);
         age.setBounds(200, 226, 145, 25);
-        age.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        ageLabel.setBounds(200, 194, 80, 40);
         loginPanelRight.add(ageLabel);
         spacing(ageLabel);
-        ageLabel.setBounds(200, 194, 80, 40);
-        ageLabel.setFont(new Font("Actor", Font.PLAIN, 9));
-        ageLabel.setForeground(new Color(13, 77, 140));
+        labelsAndFieldsCustom(ageLabel, age);
+        
         // EMAIL ADDRESS TEXTFIELD AND LABEL
         loginPanelRight.add(email);
         email.setBounds(40, 280, 145, 25);
-        email.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        emailLabel.setBounds(40, 248, 130, 40);
         loginPanelRight.add(emailLabel);
         spacing(emailLabel);
-        emailLabel.setBounds(40, 248, 130, 40);
-        emailLabel.setFont(new Font("Actor", Font.PLAIN, 9));
-        emailLabel.setForeground(new Color(13, 77, 140));
+        labelsAndFieldsCustom(emailLabel, email);
+        
         // USERNAME TEXTFIELD and LABEL
         loginPanelRight.add(username);
-        username.setBounds(200, 280, 145, 25); // adjust spacing
-        username.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        spacing(usernameLabel);
-        loginPanelRight.add(usernameLabel);
+        username.setBounds(200, 280, 145, 25); 
         usernameLabel.setBounds(200, 248, 110, 40);
-        usernameLabel.setForeground(new Color(13,77,140));    // change color on user name label me 
-        usernameLabel.setFont(new Font("Actor", Font.PLAIN, 9));
+        spacing(usernameLabel); // adjust spacing
+        loginPanelRight.add(usernameLabel);
+        labelsAndFieldsCustom(usernameLabel, username);
+        
         // PASSWORD LABEL and TEXTFIELD
         // This sets letter spacing to our JLabel Texts, I got this from stack overflow. Feel free to utilize this code snippet
         spacing(passwordLabel);
-        loginPanelRight.add(passwordLabel);
+        password.setBounds(40, 334, 145, 25);
         passwordLabel.setBounds(40, 302, 111, 40);
-        passwordLabel.setForeground(new Color(13,77,140));      // Change color on password label  me
-        passwordLabel.setFont(new Font("Actor", Font.PLAIN, 9)); // change into Plain color me size it for 15
+        loginPanelRight.add(passwordLabel);
+        labelsAndFieldsCustom(passwordLabel, password);
 
         // EYE ICON TO SHOW OR HIDE PASSWORD ASTERISK;
         loginPanelRight.add(hidePassword);
@@ -249,16 +229,14 @@ public class RegistrationForm extends JFrame{
         });
         
         loginPanelRight.add(password);
-        password.setBounds(40, 334, 145, 25);
-        password.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 
         // CONFIRMATION PASSWORD LABEL and TEXTFIELD
         // This sets letter spacing to our JLabel Texts, I got this from stack overflow. Feel free to utilize this code snippet
         spacing(confirmpassLabel);
         loginPanelRight.add(confirmpassLabel);
         confirmpassLabel.setBounds(200, 302, 135, 40);
-        confirmpassLabel.setForeground(new Color(13,77,140));
-        confirmpassLabel.setFont(new Font("Actor", Font.PLAIN, 9));
+        confirmpass.setBounds(200, 334, 145, 25);
+        labelsAndFieldsCustom(confirmpassLabel, confirmpass);
 
         loginPanelRight.add(hideConfirmPass);
         hideConfirmPass.setIcon(Hide);
@@ -302,8 +280,6 @@ public class RegistrationForm extends JFrame{
         });
 
         loginPanelRight.add(confirmpass);
-        confirmpass.setBounds(200, 334, 145, 25);
-        confirmpass.setFont(new Font("Segoe UI", Font.PLAIN, 12));
          
         // REGISTER BUTTON
         loginPanelRight.add(registerButton);
@@ -314,6 +290,7 @@ public class RegistrationForm extends JFrame{
         registerButton.setFocusable(false);
         
      // New Account? Register here
+        Font font = new Font("Segoe UI", Font.PLAIN, 15);
         JLabel copyright = new JLabel("©2023 LodgeFinder. All rights reserved");
         loginPanelRight.add(copyright);
         copyright.setFont(new Font("Poppins", Font.PLAIN, 8));
@@ -322,10 +299,10 @@ public class RegistrationForm extends JFrame{
         loginPanelRight.add(greenHere);
         loginHere.setBounds(110, 430, 200, 200);
         loginHere.setForeground(new Color(62,56,56));
-        loginHere.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        loginHere.setFont(font);
         greenHere.setForeground(new Color(100,178,255));
         greenHere.setBounds(248,510,40,40);
-        greenHere.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        greenHere.setFont(font);
         greenHere.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
         		if(e.getSource() == greenHere) {
@@ -358,38 +335,28 @@ public class RegistrationForm extends JFrame{
         email.setBorder(compoundBorder);
         
         // Add placeholder text for first name
-        fname.setForeground(new Color(100, 178, 255));
-        fname.setText(fnamePH);
+        addplaceHolder(fname, fnamePH);
 
         // Placeholder text for last name
-        lname.setForeground(new Color(100, 178, 255));
-        lname.setText(lnamePH);
-        
+        addplaceHolder(lname, lnamePH);
+
         // Placeholder text for PHONE NUMBER
-        phonenumber.setForeground(new Color(100, 178, 255));
-        phonenumber.setText(phonenumberPH);
+        addplaceHolder(phonenumber, phonenumberPH);
 
         // Placeholder para sa AGE
-        age.setForeground(new Color(100, 178, 255));
-        age.setText(agePH);
+        addplaceHolder(age, agePH);
 
         // Placeholder text for EMAIL ADDRESS
-        email.setForeground(new Color(100, 178, 255));
-        email.setText(emailPH);
+        addplaceHolder(email,emailPH );
 
         // Add placeholder text for username field
-        username.setForeground(new Color(100,178,255));
-        username.setText(usernamePH);
-        
+        addplaceHolder(username,usernamePH );
+
         // Add placeholder text for password field
-        password.setForeground(new Color(100,178,255));
-        password.setEchoChar((char) 0); // Set echo char to zero to show plain text
-        password.setText(passwordPH);
-  
+        addplaceHolderPass(password, passwordPH);
+
         // Add placeholder text for confirmation password
-        confirmpass.setForeground(placeholderColor);
-        confirmpass.setEchoChar((char) 0);
-        confirmpass.setText(confirmpassPH);
+        addplaceHolderPass(confirmpass,confirmpassPH );
         
         // Focus Listener na Func naas pinaka ubos
         focusListenerFuncPass(password, passwordPH);
@@ -413,21 +380,7 @@ public class RegistrationForm extends JFrame{
            						JOptionPane.showMessageDialog(null, "Password do not match!", "LodgeHub", JOptionPane.ERROR_MESSAGE);
            					}
            					else {
-	           					localfname = fname.getText();
-	           					locallname = lname.getText();
-	           					localphonenumber = phonenumber.getText();
-	           					localemail = email.getText();
-	           					String ageconvert = age.getText();
-	           					localage = Integer.parseInt(ageconvert);
-	           					user = username.getText();
-	           					pass = password.getText();
-	           					backend.createFolder();
-	           					backend.readFile();
-	           					backend.countLines();
-	           					backend.addData(user,pass,localemail);
-	           					JOptionPane.showMessageDialog(null, "REGISTERED!", "LodgeHub", JOptionPane.INFORMATION_MESSAGE);
-	           					dispose();
-		           				new LodgeHubLoginFrame();   
+           						registerCondition();   
            					}
            				}
            				else {
@@ -499,32 +452,14 @@ public class RegistrationForm extends JFrame{
         	public void keyPressed(KeyEvent e) {
         		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
         			if(!fname.getText().equals(fnamePH) && !lname.getText().equals(lnamePH) && !phonenumber.getText().equals(phonenumberPH)
-       						&& !age.getText().equals(agePH) && !email.equals(emailPH) && !username.getText().equals(usernamePH) && !password.getText().equals(passwordPH) && !confirmpass.getText().equals(confirmpassPH)) {
-       			
-       					localfname = fname.getText();
-       					locallname = lname.getText();
-       					localphonenumber = phonenumber.getText();
-       					localemail = email.getText();
-       					String ageconvert = age.getText();
-       					localage = Integer.parseInt(ageconvert);
-       					user = username.getText();
-       					pass = password.getText();
-       					backend.createFolder();
-       					backend.readFile();
-       					backend.countLines();
-       					backend.addData(user,pass,localemail);
-       					registerButton.setText("SUCCESS!");
-       					registerButton.setForeground(Color.GREEN);
-       					try {
-							Thread.sleep(1000);
-							dispose();
-           					new LodgeHubLoginFrame();
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-   
-       				}
+       						&& !age.getText().equals(agePH) && !email.equals(emailPH) && !username.getText().equals(usernamePH) && !password.getText().equals(passwordPH) && !confirmpass.getText().equals(confirmpassPH)) {       			
+        				if(!password.getText().equals(confirmpass.getText())) {
+       						JOptionPane.showMessageDialog(null, "Password do not match!", "LodgeHub", JOptionPane.ERROR_MESSAGE);
+       					}
+       					else {
+       						registerCondition();  
+       					}
+        			}
        				else {
        					JOptionPane.showMessageDialog(null, "Please fill-in empty fields", "LodgeHub", JOptionPane.WARNING_MESSAGE);
        				}
@@ -534,4 +469,42 @@ public class RegistrationForm extends JFrame{
         });
 	}
     
+    public void registerCondition() {
+    		localfname = fname.getText();
+			locallname = lname.getText();
+			localphonenumber = phonenumber.getText();
+			localemail = email.getText();
+			String ageconvert = age.getText();
+			localage = Integer.parseInt(ageconvert);
+			user = username.getText();
+			pass = password.getText();
+			backend.createFolder();
+			backend.readFile();
+			backend.countLines();
+			backend.addData(user,pass,localemail, localfname);
+			JOptionPane.showMessageDialog(null, "REGISTERED!", "LodgeHub", JOptionPane.INFORMATION_MESSAGE);
+			dispose();
+			new LodgeHubLoginFrame(); 
+    }
+    
+    public void addplaceHolder(JTextField textfield, String textfieldPH) {
+    	// Add placeholder text for first name
+        textfield.setForeground(placeholderColor);
+        textfield.setText(textfieldPH);
+ 
+    }
+    public void addplaceHolderPass(JPasswordField passfield, String textfieldPH) {
+    	// Add placeholder text for password field
+    	passfield.setForeground(placeholderColor);
+    	passfield.setEchoChar((char) 0); // Set echo char to zero to show plain text
+    	passfield.setText(textfieldPH);
+ 
+    }
+    
+    public void labelsAndFieldsCustom(JLabel label, JTextField fields) {
+    	 label.setFont(new Font("Actor", Font.PLAIN, 9));
+    	 label.setForeground(new Color(13, 77, 140));
+    	 fields.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+    }
+        
 }
