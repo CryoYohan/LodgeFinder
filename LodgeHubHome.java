@@ -1,3 +1,4 @@
+package trashcash;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -10,7 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -27,6 +27,8 @@ import javax.swing.border.LineBorder;
 public class LodgeHubHome extends JFrame {
     final int FRAME_SIZE_WIDTH = 1250;
     final int FRAME_SIZE_HEIGHT = 750;
+    
+    LodgesDataBase lodgesDatabase = new LodgesDataBase();
 
     // NavBar at the Left Side
     JPanel navBar = new JPanel();
@@ -48,11 +50,8 @@ public class LodgeHubHome extends JFrame {
     JLabel locationBox = new JLabel();
     JLabel searchLodgeButton = new JLabel();
     
-    String[] barangays = {"Kalubihan", "Parian", "Labangon", "Tisa", "Mambaling", "Guadalupe"};
-    String[][] lodges = {{"Sogo" ,"TMS Lodge", "Mount View Inn", "Moon Hostel", "Marlo Lodge"}, 
-    					 {"Beehive Lodge", "Bro's Lodging", "Honeymoon Inn", "Rest Lodge", "LodgeHub"},
-    					 {"Seafarer's Inn", "HomiesLodge", "Queens Land", "Rest and Go", "Sleep Well Lodge"}};
-    JComboBox dropdown = new JComboBox<>(barangays);
+   
+    JComboBox dropdown = new JComboBox<>(lodgesDatabase.barangays);
     
     // USER INTERFACE
     JPanel userProfileContainer;
@@ -71,7 +70,7 @@ public class LodgeHubHome extends JFrame {
     JPanel panel3 = new JPanel();
     JPanel panel4 = new JPanel();
     JPanel panel5 = new JPanel();
-    JLabel label1 = new JLabel("SOGO");
+    JLabel label1 = new JLabel();
     JLabel label2 = new JLabel();
     JLabel label3 = new JLabel();
     JLabel label4 = new JLabel();
@@ -81,19 +80,21 @@ public class LodgeHubHome extends JFrame {
     JLabel lodgelabel3 = new JLabel("");
     JLabel lodgelabel4 = new JLabel("");
     JLabel lodgelabel5 = new JLabel("");
-    
-    // Array of Labels
-    JLabel arrlabel[] = {lodgelabel1,lodgelabel2,lodgelabel3,lodgelabel4,lodgelabel5};
-    
-    JLabel showLodgeBG = new JLabel();
-    JLabel favoriteIconLabel = new JLabel();
-    ImageIcon favoriteIcon = new ImageIcon("heartFavorite.png");
-    ImageIcon showLodgePic = new ImageIcon("HomeWallpaperClear.jpg");
     ImageIcon img1 = new ImageIcon("showLodge.jpg");
     ImageIcon img2 = new ImageIcon("showLodge.jpg");
     ImageIcon img3 = new ImageIcon("showLodge.jpg");
     ImageIcon img4 = new ImageIcon("showLodge.jpg");
     ImageIcon img5 = new ImageIcon("showLodge.jpg");
+    // Array of LodgeLabels
+    JLabel arrlodgelabel[] = {lodgelabel1,lodgelabel2,lodgelabel3,lodgelabel4,lodgelabel5};
+    // Array of Lodge Image Labels
+    JLabel arrimglabel[] = {label1,label2,label3,label4,label5};
+    
+    JLabel showLodgeBG = new JLabel();
+    JLabel favoriteIconLabel = new JLabel();
+    ImageIcon favoriteIcon = new ImageIcon("heartFavorite.png");
+    ImageIcon showLodgePic = new ImageIcon("HomeWallpaperClear.jpg");
+   
     
     // Dimension of Right Panel
     Dimension dimension = new Dimension(1039,750);
@@ -289,8 +290,8 @@ public class LodgeHubHome extends JFrame {
     	favoriteIconLabel.setIcon(favoriteIcon);
     	label1.setIcon(resizeImageIcon(img1, 260,100));
     	label1.setBounds(0, -30, 260,220);
-    	lodgelabel1.setFont(new Font("Segoe UI", Font.BOLD, 20));
-    	lodgelabel1.setBounds(10, -30, 160, 85);
+    	lodgelabel1.setFont(new Font("Segoe UI", Font.BOLD, 15));
+    	lodgelabel1.setBounds(10, -30, 230, 85);
     	
     	panel2.setPreferredSize(new Dimension(260,220));
     	panel2.setBackground(Color.red);
@@ -303,8 +304,8 @@ public class LodgeHubHome extends JFrame {
     	favoriteIconLabel.setIcon(favoriteIcon);
     	label2.setIcon(resizeImageIcon(img2, 260,100));
     	label2.setBounds(0, -30, 260,220);
-    	lodgelabel2.setFont(new Font("Segoe UI", Font.BOLD, 20));
-    	lodgelabel2.setBounds(10, -30, 160, 85);
+    	lodgelabel2.setFont(new Font("Segoe UI", Font.BOLD, 15));
+    	lodgelabel2.setBounds(10, -30, 230, 85);
     	
     	panel3.setPreferredSize(new Dimension(260,220));
     	panel3.setBackground(Color.GREEN);
@@ -317,8 +318,8 @@ public class LodgeHubHome extends JFrame {
     	favoriteIconLabel.setIcon(favoriteIcon);
     	label3.setIcon(resizeImageIcon(img3, 260,100));
     	label3.setBounds(0, -30, 260,220);
-    	lodgelabel3.setFont(new Font("Segoe UI", Font.BOLD, 20));
-    	lodgelabel3.setBounds(10, -30, 160, 85);
+    	lodgelabel3.setFont(new Font("Segoe UI", Font.BOLD, 15));
+    	lodgelabel3.setBounds(10, -30, 230, 85);
     	
     	panel4.setPreferredSize(new Dimension(260,220));
     	panel4.setBackground(Color.black);
@@ -331,8 +332,8 @@ public class LodgeHubHome extends JFrame {
     	favoriteIconLabel.setIcon(favoriteIcon);
     	label4.setIcon(resizeImageIcon(img4, 260,100));
     	label4.setBounds(0, -30, 260,220);
-    	lodgelabel4.setFont(new Font("Segoe UI", Font.BOLD, 20));
-    	lodgelabel4.setBounds(10, -30, 160, 85);
+    	lodgelabel4.setFont(new Font("Segoe UI", Font.BOLD, 15));
+    	lodgelabel4.setBounds(10, -30, 230, 85);
     	
     	panel5.setPreferredSize(new Dimension(260,220));
     	panel5.setBackground(Color.magenta);
@@ -345,8 +346,8 @@ public class LodgeHubHome extends JFrame {
     	favoriteIconLabel.setIcon(favoriteIcon);
     	label5.setIcon(resizeImageIcon(img5, 260,100));
     	label5.setBounds(0, -30, 260,220);
-    	lodgelabel5.setFont(new Font("Segoe UI", Font.BOLD, 20));
-    	lodgelabel5.setBounds(10, -30, 160, 85);
+    	lodgelabel5.setFont(new Font("Segoe UI", Font.BOLD, 15));
+    	lodgelabel5.setBounds(10, -30, 230, 85);
     	
     	showLodgeBG.setBounds(16, 0, 1040, 840);
     	showLodgeBG.setIcon(resizeImageIcon(showLodgePic,1039,750));
@@ -405,19 +406,23 @@ public class LodgeHubHome extends JFrame {
     
     public void selectBarangay(JComboBox combobox) {
     	//String message = "";
-    	for(int i = 0; i < barangays.length;i++) {
-    		if(combobox.getSelectedItem().equals(barangays[i])) {
-    			for(int j = 0; j < lodges[i].length; j++) {
+    	for(int i = 0; i < lodgesDatabase.barangays.length;i++) {
+    		if(combobox.getSelectedItem().equals(lodgesDatabase.barangays[i])) {
+    			for(int j = 0; j < lodgesDatabase.lodges[i].length; j++) {
     				int brngy = i;   				
-    				arrlabel[j].setText(lodges[brngy][j]);
+    				arrlodgelabel[j].setText(lodgesDatabase.lodges[brngy][j]);
+    				arrimglabel[j].setIcon(resizeImageIcon(lodgesDatabase.lodgePictures[brngy][j], 260,100));
     			}
     			displayLodge.setVisible(true);
     			homeContainer.setVisible(false);
-    			//JOptionPane.showMessageDialog(null, message);
     			break;
     		}
     	}
     	
+    }
+    
+    public static void main(String[]args) {
+    	new LodgeHubHome();
     }
  
   
