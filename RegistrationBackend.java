@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 public class RegistrationBackend {
 	int ln;
 	
-	String Username, Password, Email;
+	String Username, Password, Email, Firstname, Lastname, Age, Phonenumber;
 	File f = new File("C:\\Users\\CYRIL\\OneDrive\\Desktop\\School Files\\OOPROG21\\LodgeHub\\Accounts");
 	// REGISTER THE USER'S CREDENTIALS
     // If folder doesn't exist, create new folder
@@ -40,7 +40,7 @@ public class RegistrationBackend {
 		}
     }
     // Add data to Text file, user, pass and email
-    void addData(String usr, String pswd, String mail) {
+    void addData(String usr, String pswd, String mail, String fname) {
     	try {
 			RandomAccessFile raf = new RandomAccessFile(f+"\\accounts.txt", "rw");
 			for(int i = 0; i < ln; i++) {
@@ -48,7 +48,11 @@ public class RegistrationBackend {
 			}
 			raf.writeBytes("Username:" + usr + "\r\n");
 			raf.writeBytes("Password:" + pswd + "\r\n");
-			raf.writeBytes("Email:" + mail);
+			raf.writeBytes("Email:" + mail + "\r\n");
+			raf.writeBytes("Fname:" + fname);
+//			raf.writeBytes("Lname:" + lname +  "\r\n");
+//			raf.writeBytes("Age:" + age +  "\r\n");
+//			raf.writeBytes("Phonenum:" + phonenum);
 			raf.writeBytes("\r\n");
 			raf.writeBytes("\r\n");
 		} catch (FileNotFoundException ex) {
@@ -75,26 +79,27 @@ public class RegistrationBackend {
 		}
     }
     // This checks the data inputted in the login user and pass if it matches or not, dire ang naay error
-    // If sayop na user og pass imong ibutang sa login supposedly mo display incorrect user/pass
-    // Nya dili man, Calida try to find out ngano ni, after nimo ma solve e remove ni na comment nya ipabilin ang 
-    // info about ani nga method
     void logic(String usr, String pswd) {
     	try {
 			RandomAccessFile raf = new RandomAccessFile(f + "\\accounts.txt", "rw");
-			for(int i = 0; i < ln; i+=4) {
+			for(int i = 0; i < ln; i+=5) {
 				System.out.println("count " + i);
 				String lineForUser = raf.readLine();
 		        String lineForPass = raf.readLine();
 
 		        // Check if either line is null (end of file)
 		        if (lineForUser == null || lineForPass == null) {
-		            JOptionPane.showMessageDialog(null, "Invalid User/Password");
-		            break;
+		            JOptionPane.showMessageDialog(null, "Invalid User/Password");		           
 		          }
 		        // Check if the line has enough characters before extracting substrings
 	            if (lineForUser.length() >= 9 && lineForPass.length() >= 9) {
 	                String forUser = lineForUser.substring(9);
 	                String forPass = lineForPass.substring(9);
+//	                String forEmail = lineForPass.substring(6);
+//	                String forFname = lineForPass.substring(7);
+//	                String forLname = lineForPass.substring(7);
+//	                String forAge = lineForPass.substring(4);
+//	                String forPhonenumber = lineForPass.substring(9);
 
 	                if (usr.equals(forUser) && pswd.equals(forPass)) {
 	                    JOptionPane.showMessageDialog(null, "Login Successful!");
@@ -103,9 +108,8 @@ public class RegistrationBackend {
 	                }
 	            } else {
 	                JOptionPane.showMessageDialog(null, "Invalid User/Password");
-	                break;
 	            }
-				for(int k =1; k <= 2; k++) {
+				for(int k =1; k <= 3; k++) {
 					raf.readLine();
 				}
 				
