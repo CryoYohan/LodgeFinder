@@ -32,36 +32,55 @@ public class LodgeHubHome extends JFrame {
 
     // NavBar at the Left Side
     JPanel navBar = new JPanel();
-    JButton Profile = new CircleJButton("Cyril John");
-    JButton Home = new HomeJButton("Home");
-    JButton Favorites = new CircleJButton("Favorites");
+    JButton Profile = new JButton("Cyril John");
+    JButton Home = new JButton("Home");
+    JButton Favorites = new JButton("Favorites");
     JButton Logout = new CircleJButton("Logout");
-    ImageIcon profile = new ImageIcon("profileAvatar.png");
-    ImageIcon home = new ImageIcon("HomeWhite.png");
-    ImageIcon heart = new ImageIcon("heart.png");
-    ImageIcon logout = new ImageIcon("Logout.png");
-    ImageIcon icon = new ImageIcon("LodgeHubIcon.png");
-    ImageIcon searchLodge = new ImageIcon("serachLodgeButton.jpg");
+    ImageIcon profile = new ImageIcon("Image/profileAvatar.png");
+    ImageIcon home = new ImageIcon("Image/HomeWhite.png");
+    ImageIcon homeBlue = new ImageIcon("Image/Home.png");
+    ImageIcon heart = new ImageIcon("Image/heart.png");
+    ImageIcon whiteHeart = new ImageIcon("Image/whiteHeart.png");
+    ImageIcon logout = new ImageIcon("Image/Logout.png");
+    ImageIcon icon = new ImageIcon("Image/LodgeHubIcon.png");
 
     // HOME INTERFACE
     JPanel homeContainer = new JPanel();
     JLabel homeBackground = new JLabel();
-    ImageIcon homeWallpaper = new ImageIcon("HomeWallpaper1x.jpg");
-    JLabel locationBox = new JLabel();
-    JLabel searchLodgeButton = new JLabel();
-    
-   
-    JComboBox dropdown = new JComboBox<>(lodgesDatabase.barangays);
+    ImageIcon homeWallpaper = new ImageIcon("Image/HomeWallpaper.jpg");
+    String[] barangays = {"Kalubihan", "Parian", "Labangon", "Tisa", "Mambaling", "Guadalupe"};
+    JComboBox dropdown = new JComboBox<>(barangays);
+    JButton btn = new LodgeButton();
+    ImageIcon searchButton = new ImageIcon("Image/searchLodge.png");
     
     // USER INTERFACE
     JPanel userProfileContainer;
-    JLabel backgroundPicUserProfile,backgroundPicFavorites ; // BACKGROUND FOR background pic user profile and favorites
-    ImageIcon userProfileBG = new ImageIcon("userProfileWallpaper2.jpg");
-    ImageIcon favPanelBG = new ImageIcon("HomeWallpaperClear.jpg");
-    JLabel userprofilePic = new JLabel();
+    JLabel titleAndQuote = new JLabel(); // TITLE and QUOTE BACKGROUND SA USER INTERFACE WHAT I MEAN SA TITLE IS KANANG NAA SA KINABABWAN
+    ImageIcon titleQuote = new ImageIcon("Image/titleQuote.jpg"); // IMAGE SA TITLE AND QUOTE
+    JLabel backgroundPic = new JLabel(); // BACKGROUND PICTURE WITH LOW EXPOSURE
+    ImageIcon bgPic = new ImageIcon("Image/bgPic.jpg"); // IMAGE SA BACKGROUND LOW EXPO
+    JPanel userName = new JPanel(); // Panel for user's name email and picture
+    JPanel about = new JPanel(); // Panel for user's personal details
+    JPanel booking = new JPanel(); // Panel for booking
+    JPanel schedule = new JPanel(); // Panel para schedule
     
     // FAVORITES INTERFACE
-    JPanel favContainer = new JPanel();
+    JPanel favContainer;
+    JLabel favBackground = new JLabel();
+    ImageIcon favBG = new ImageIcon("Image/FavBG.png");
+    JLabel overFive = new JLabel();
+    JLabel firstFav = new JLabel();
+    JLabel secFav = new JLabel();
+    JLabel thirdFav = new JLabel();
+    JLabel fourthFav = new JLabel();
+    JLabel fifthFav = new JLabel();
+    JLabel displayName = new JLabel(); // Name sa lodge, inn or pension
+    JLabel displayPic = new JLabel(); // Ari i set as icon ang picture sa lodge
+    ImageIcon Pics = new ImageIcon(); // Ari i butang ang pic
+    JLabel street = new JLabel(); // here is the street kung asa nga spot
+    JLabel price = new JLabel(); // here is the price
+    JLabel rate = new JLabel(); // here is the rate bisag wata kibaw pilay ratings (buotbuoti lng ni ya oy)
+    JButton remove = new RemoveJButton("REMOVE"); // remove
     
     // DISPLAY LODGES INTERFACE
     JPanel displayLodge = new JPanel();
@@ -226,43 +245,139 @@ public class LodgeHubHome extends JFrame {
     }
     
     public JPanel UserProfile() {
-    	Border lineBorder = new LineBorder(new Color(13,77,140), 5, true);
-    	backgroundPicUserProfile = new JLabel();
     	userProfileContainer = new JPanel();
-    	userProfileContainer.setPreferredSize(new Dimension(dimension));
-    	userProfileContainer.setBounds(194, -50, 1039,763);
-    	userProfileContainer.add(userprofilePic);
-    	userProfileContainer.add(backgroundPicUserProfile);
-    	
-    //  Ang profile sa nvabar e reuse sa User Profile
-    	
-    	userprofilePic.setBorder(lineBorder);
-    	userprofilePic.setBackground(Color.red);
-    	userprofilePic.setPreferredSize(new Dimension(150,150));
-    	userprofilePic.setBounds(40, 320, 150, 150);
-    	
-    	
-    	backgroundPicUserProfile.setBounds(16, 0, 1040, 840);
-    	backgroundPicUserProfile.setIcon(resizeImageIcon(userProfileBG, 1039,750));
+    	userProfileContainer.setPreferredSize(new Dimension(1039,750));
+    	userProfileContainer.setBounds(190, 0, 1039, 750);
     	userProfileContainer.setLayout(null);
     	userProfileContainer.setVisible(false);
-    	
-    	
+        userProfileContainer.add(titleAndQuote);
+        userProfileContainer.add(backgroundPic);
+        //TITLE AND BACKGROUND PICTURE
+        titleAndQuote.setIcon(resizeImageIcon(titleQuote, 1039, 119));
+        titleAndQuote.setBounds(15, 0, 1039, 119);
+        backgroundPic.setIcon(resizeImageIcon(bgPic, 1039, 584));
+        backgroundPic.setBounds(15,128, 1039, 584);
+        backgroundPic.add(userName);
+        backgroundPic.add(about);
+        backgroundPic.add(booking);
+        backgroundPic.add(schedule);
+        //PANEL FOR USER'S NAME EMAIL AND PICTURE WITH WHITE BACKGROUND
+        userName.setBounds(0, 215, 585, 124);
+        userName.setBackground(Color.WHITE);
+        userName.setBorder(BorderFactory.createMatteBorder(5,0,0,0, new Color(13, 77, 140))); // Creates top border
+        
+        //PANEL FOR USER'S PERSONAL DETAILS
+        about.setBounds(0, 339, 585, 245);
+        about.setBackground(new Color(13, 77, 140));
+
+        //PANEL FOR A BOOKING
+        booking.setBounds(585, 0, 454, 449);
+        booking.setBackground(new Color(217, 217, 217));
+
+        //PANEL FOR SCHEDULES
+        schedule.setBounds(585, 449, 454, 135);
+        schedule.setBackground(new Color(100, 178, 255));
     	
     	return userProfileContainer;
     }
     
     public JPanel Favorites() {
-    	backgroundPicFavorites = new JLabel();
-    	favContainer.setPreferredSize(new Dimension(dimension));
-    	favContainer.setBounds(180, -50, 1060,763);
-    	favContainer.add(backgroundPicFavorites);
-    	
-    	//  Ang profile sa navbar e reuse sa User Profile
-    	backgroundPicFavorites.setBounds(16, 0, 1040, 840);
-    	backgroundPicFavorites.setIcon(resizeImageIcon(favPanelBG, 1039,750));
+    	favContainer = new JPanel();
     	favContainer.setLayout(null);
+    	favContainer.setPreferredSize(new Dimension(1039,750));
+    	favContainer.setBounds(195, 0, 1039, 750);
     	favContainer.setVisible(false);
+        favContainer.add(favBackground);
+
+        //NAVBAR BACKGROUND
+
+
+        favBackground.setIcon(favBG);
+        favBackground.setBounds(0, 0, 1039, 985);
+        favBackground.add(overFive); // mao ni ang mo count pila ka lodges, inn or pension iya gi favorite maximum is 5 ra 
+        favBackground.add(firstFav); // First nga lodge, inn or pension nga iya gi add sa favorite
+        favBackground.add(secFav); // Second favorite
+        favBackground.add(thirdFav); // Third favorite
+        favBackground.add(fourthFav); // Fourth favorite
+        favBackground.add(fifthFav); // Fifth and the last favorite
+        favBackground.add(displayName); // Name sa lodge, inn or pension
+        favBackground.add(displayPic); // Picture
+        favBackground.add(street); // Street kung asa dapita
+        favBackground.add(price); // Presyo 
+        favBackground.add(rate); // Ratings 
+        favBackground.add(remove); //BUTTON PARA MA REMOVE
+
+        overFive.setText("5/5");
+        overFive.setForeground(Color.WHITE);
+        overFive.setBounds(30, 210, 47, 29);
+        overFive.setFont(new Font("Segoe UI", Font.BOLD, 25));
+
+        //First favorite
+        firstFav.setText("• Sogo Hotel");
+        firstFav.setForeground(Color.WHITE);
+        firstFav.setBounds(100, 290, 255, 45);
+        firstFav.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        firstFav.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(100, 178, 255)));
+
+        //Second Favorite
+        secFav.setText("• TMS Lodge");
+        secFav.setForeground(Color.WHITE);
+        secFav.setBounds(100, 370, 255, 45);
+        secFav.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        secFav.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(100, 178, 255)));
+
+        //Third Favorite
+        thirdFav.setText("• Marlo Lodge");
+        thirdFav.setForeground(Color.WHITE);
+        thirdFav.setBounds(100, 450, 255, 45);
+        thirdFav.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        thirdFav.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(100, 178, 255)));
+
+        //Fourth Favorite
+        fourthFav.setText("• Ben's Inn");
+        fourthFav.setForeground(Color.WHITE);
+        fourthFav.setBounds(100, 530, 255, 45);
+        fourthFav.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        fourthFav.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(100, 178, 255)));
+
+        //Fifth favoriteee
+        fifthFav.setText("• Peter Pension");
+        fifthFav.setForeground(Color.WHITE);
+        fifthFav.setBounds(100, 610, 255, 45);
+        fifthFav.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        fifthFav.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, new Color(100, 178, 255)));
+
+        //Here ma display ang ge clicked nga favorite
+        displayName.setText("Sogo Hotel"); // ari e set ang name 
+        displayName.setForeground(Color.BLACK);
+        displayName.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        displayName.setBounds(580, 230, 200, 43);
+
+        // Mao ni ang code para sa picture
+        displayPic.setBounds(580, 275, 400, 230); // DAPAT ANG PIC KAY FIXED ANG SIZE PARA DILI MAGUBA NYA NINDOT TAN AWON INIG SWITCH SA ANOTHER :D
+        displayPic.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+
+        //Mao ni ang label para sa street
+        street.setText("Sanciangko St, Cebu City");
+        street.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+        street.setBounds(580, 520, 310, 23);
+
+        //Mao ni ang label para sa priceee
+        price.setText("350 per hour");
+        price.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+        price.setBounds(580, 570, 310, 23);
+
+        //Mao ni ang label para sa ratings
+        rate.setText("Rated: 4.5 out of 5");
+        rate.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+        rate.setBounds(580, 620, 310, 23);
+
+        //Button to remove the choosen favorite
+        remove.setBounds(870, 660, 146, 44);
+        remove.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        remove.setBackground(Color.WHITE);
+        remove.setForeground(Color.BLACK);
+        remove.setFocusable(false);
        
         return favContainer;
     }
@@ -367,17 +482,41 @@ public class LodgeHubHome extends JFrame {
 					homeContainer.setVisible(true);
 					userProfileContainer.setVisible(false);
 					favContainer.setVisible(false);
+					Home.setIcon(home);
+                    			Home.setForeground(Color.WHITE);
+                    			Home.setBackground(new Color(19, 112, 204));
+                    			Favorites.setIcon(heart);
+                    			Favorites.setForeground(new Color(13, 77, 140));
+                    			Favorites.setBackground(new Color(100,178,255));
+                    			Profile.setBackground(new Color(100,178,255));
+                    			Profile.setForeground(new Color(13, 77, 140));
 				}
 				if(source==Profile) {
 					userProfileContainer.setVisible(true);
 					homeContainer.setVisible(false);
 					favContainer.setVisible(false);
+					Profile.setForeground(Color.WHITE);
+                    			Profile.setBackground(new Color(19, 112, 204));
+                    			Favorites.setIcon(heart);
+                    			Favorites.setForeground(new Color(13, 77, 140));
+                    			Favorites.setBackground(new Color(100,178,255));
+                    			Home.setIcon(homeBlue);
+					Home.setForeground(new Color(13, 77, 140));
+                    			Home.setBackground(new Color(100,178,255));
 					
 				}
 				if(source==Favorites) {
 					favContainer.setVisible(true);
 					userProfileContainer.setVisible(false);
 					homeContainer.setVisible(false);
+                    			favContainer.setVisible(true);
+                    			Favorites.setIcon(whiteHeart);
+                   			Favorites.setForeground(Color.WHITE);
+                    			Favorites.setBackground(new Color(19, 112, 204));
+                    			Home.setIcon(homeBlue);
+                    			Home.setForeground(new Color(13, 77, 140));
+                    			Home.setBackground(new Color(100,178,255));
+                    			Profile.setBackground(new Color(100,178,255));
 				}
 				if(source==Logout) {
 					int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "LodgeFinder", JOptionPane.YES_NO_OPTION);
