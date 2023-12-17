@@ -14,8 +14,7 @@ public class RegistrationForm extends JFrame{
 	final int FRAME_SIZE_WIDTH = 833;
 	final int FRAME_SIZE_HEIGHT = 653;
 	private String usernameVar = " ", passwordVar = " ";
-    String localfname, locallname, localphonenumber, localemail, user, pass;
-    int localage, registered = 0; // registered is a variable the helps count how many accounts are registered and store it in the array of object
+    String localfname, locallname, localphonenumber, localemail, user, pass, localage;
 	
 	// Main Panels
 	JPanel loginPanelLeft = new JPanel();
@@ -474,14 +473,14 @@ public class RegistrationForm extends JFrame{
 			locallname = lname.getText();
 			localphonenumber = phonenumber.getText();
 			localemail = email.getText();
-			String ageconvert = age.getText();
-			localage = Integer.parseInt(ageconvert);
+			//String ageconvert = age.getText();
+			localage = age.getText();
 			user = username.getText();
 			pass = password.getText();
 			backend.createFolder();
 			backend.readFile();
 			backend.countLines();
-			backend.addData(user,pass,localemail, localfname);
+			backend.addData(user,pass,localemail, localfname, locallname, localphonenumber,  localage);
 			JOptionPane.showMessageDialog(null, "REGISTERED!", "LodgeHub", JOptionPane.INFORMATION_MESSAGE);
 			dispose();
 			new LodgeHubLoginFrame(); 
