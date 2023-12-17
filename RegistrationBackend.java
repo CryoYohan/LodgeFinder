@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 public class RegistrationBackend {
 	int ln;
-	
+	String UsernameMain = "";
 	String Username, Password, Email, Firstname, Lastname, Age, Phonenumber;
 	File f = new File("C:\\Users\\CYRIL\\OneDrive\\Desktop\\School Files\\OOPROG21\\LodgeHub\\Accounts");
 	// REGISTER THE USER'S CREDENTIALS
@@ -40,7 +40,7 @@ public class RegistrationBackend {
 		}
     }
     // Add data to Text file, user, pass and email
-    void addData(String usr, String pswd, String mail, String fname) {
+    void addData(String usr, String pswd, String mail, String fname, String lname, String phonenumber,String age) {
     	try {
 			RandomAccessFile raf = new RandomAccessFile(f+"\\accounts.txt", "rw");
 			for(int i = 0; i < ln; i++) {
@@ -49,10 +49,10 @@ public class RegistrationBackend {
 			raf.writeBytes("Username:" + usr + "\r\n");
 			raf.writeBytes("Password:" + pswd + "\r\n");
 			raf.writeBytes("Email:" + mail + "\r\n");
-			raf.writeBytes("Fname:" + fname);
-//			raf.writeBytes("Lname:" + lname +  "\r\n");
-//			raf.writeBytes("Age:" + age +  "\r\n");
-//			raf.writeBytes("Phonenum:" + phonenum);
+			raf.writeBytes("Fname:" + fname + "\r\n");
+			raf.writeBytes("Lname:" + lname +  "\r\n");
+			raf.writeBytes("Age:" + age +  "\r\n");
+			raf.writeBytes("Phonenum:" + phonenumber);
 			raf.writeBytes("\r\n");
 			raf.writeBytes("\r\n");
 		} catch (FileNotFoundException ex) {
@@ -79,39 +79,46 @@ public class RegistrationBackend {
 		}
     }
     // This checks the data inputted in the login user and pass if it matches or not, dire ang naay error
+    // If sayop na user og pass imong ibutang sa login supposedly mo display incorrect user/pass
+    // Nya dili man, Calida try to find out ngano ni, after nimo ma solve e remove ni na comment nya ipabilin ang 
+    // info about ani nga method
     void logic(String usr, String pswd) {
     	try {
 			RandomAccessFile raf = new RandomAccessFile(f + "\\accounts.txt", "rw");
-			for(int i = 0; i < ln; i+=5) {
+			for(int i = 0; i < ln; i+=8) {
 				System.out.println("count " + i);
 				String lineForUser = raf.readLine();
 		        String lineForPass = raf.readLine();
+		        String lineForEmail = raf.readLine();
+		        String lineForFname = raf.readLine();
+		        String lineForLname = raf.readLine();
+		        String lineForAge = raf.readLine();
+		        String lineForPhonenumber = raf.readLine();
+		       
 
 		        // Check if either line is null (end of file)
-		        if (lineForUser == null || lineForPass == null) {
+		        if (lineForUser == null || lineForPass == null || lineForEmail == null || lineForFname == null) {
 		            JOptionPane.showMessageDialog(null, "Invalid User/Password");		           
 		          }
 		        // Check if the line has enough characters before extracting substrings
-	            if (lineForUser.length() >= 9 && lineForPass.length() >= 9) {
+	            if (lineForUser.length() >= 9 && lineForPass.length() >= 9 && lineForEmail.length()>=6 && lineForFname.length()>=7 && lineForLname.length()>=7 &&  lineForAge.length()>=4 && lineForPhonenumber.length()>=9 ) {
 	                String forUser = lineForUser.substring(9);
 	                String forPass = lineForPass.substring(9);
-//	                String forEmail = lineForPass.substring(6);
-//	                String forFname = lineForPass.substring(7);
-//	                String forLname = lineForPass.substring(7);
-//	                String forAge = lineForPass.substring(4);
-//	                String forPhonenumber = lineForPass.substring(9);
+	                String forEmail = lineForEmail.substring(6);
+	                String forFname = lineForFname.substring(6);
+	                String forLname = lineForLname.substring(6);
+	                String forAge = lineForAge.substring(4);
+	                String forPhonenumber = lineForPhonenumber.substring(9);
 
 	                if (usr.equals(forUser) && pswd.equals(forPass)) {
 	                    JOptionPane.showMessageDialog(null, "Login Successful!");
-	                    new LodgeHubHome();
+	                    new LodgeHubHome(forFname, forLname, forAge, forPhonenumber, forEmail);
 	                    break;
 	                }
-	            } else {
+	            } else 
 	                JOptionPane.showMessageDialog(null, "Invalid User/Password");
-	            }
-				for(int k =1; k <= 3; k++) {
-					raf.readLine();
-				}
+
+				raf.readLine();
 				
 				
 			}
@@ -133,7 +140,7 @@ public class RegistrationBackend {
 			Email = raf.readLine().substring(6);
 			if(usr.equals(Username) & pswd.equals(Password)) {
 				JOptionPane.showMessageDialog(null, "Login Successful!");
-				new LodgeHubHome();
+				//new LodgeHubHome();
 			}
 			else
 				JOptionPane.showMessageDialog(null, "Invalid User/Password");
