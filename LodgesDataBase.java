@@ -9,7 +9,7 @@
 		 	// Lodges sa mga Barangay
 		    String[][] lodges = {
 		    					 {"SOGO Hotel" ,"TMS Lodge", "ALEMAR Budgetel", "Best Inn", "Hope Pension House"}, 
-		    					 {"TMS Lodge", "KSL Lodge", "Kean's Lodge", "Q-Hotel", ""},
+		    					 {"TMS Lodge Pahina", "KSL Lodge", "Kean's Lodge", "Q-Hotel", ""},
 		    					 {"Cebu Guest Inn", "Wjv Inn Lahug", "Queensland", "Cebu Leisure Lodge", "OYO Sugbo Leisure Lodge"},
 		    					 {"Palazzo Pensionne","TravelBee Business Inn", "Shejoje Poshtel Cebu", "Sans Hotel", "Soleil Suites"},
 		    					 {"Queensland","GS Tourist Inn","OYO 673 Mambaling Pension 2", "OYO 655 Mambaling Pension", ""},
@@ -22,6 +22,22 @@
 		    					 {"RF Suites", "KC 1-Bedroom @ Horizon 101", "JDT's Condo @ Horizons 101", "", ""},
 		    					 {"Cebu Pension Plaza", "MJ Hotel and Suites", "St. Mark Hotel", "Cebu Pension Plaza", ""},
 		    					 };
+		    String[][] lodgesLocations = {
+		    								{"Sanciangko St., Kalubihan, Cebu City, Besides Cebuana Lhuiller","Sanciangko St., Kalubihan, Cebu City", "Corner P. Lopez St., Kalubihan, Cebu City", "Corner P. Lopez St. and Balintawak, Kalubihan, Cebu City","Colon St., Kalubihan, Cebu City, Besides at Kara’s Fried Chicken"},
+		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
+		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
+		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
+		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
+		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
+		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
+		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
+		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
+		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
+		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
+		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
+		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
+		    								
+		    							};
 		    
 		    ImageIcon img1 = new ImageIcon("showLodge.jpg");
 		    ImageIcon img2 = new ImageIcon("showLodge.jpg");
