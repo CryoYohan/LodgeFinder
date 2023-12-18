@@ -126,29 +126,41 @@ public class RegistrationBackend {
     	
     }
     
-    void checkData(String usr, String pswd) {
+ // Update user information
+    void updateData(String usr, String newPswd, String newMail, String newFname, String newLname, String newPhonenumber, String newAge) {
+        try {
+            RandomAccessFile raf = new RandomAccessFile(f + "\\accounts.txt", "rw");
+            for (int i = 0; i < ln; i++) {
+                String lineForUser = raf.readLine();
 
-    	try {
-			RandomAccessFile raf = new RandomAccessFile(f+"\\accounts.txt","rw");
-			String line = raf.readLine();
-			Username = line.substring(9);
-			Password = raf.readLine().substring(9);
-			Email = raf.readLine().substring(6);
-			if(usr.equals(Username) & pswd.equals(Password)) {
-				JOptionPane.showMessageDialog(null, "Login Successful!");
-				//new LodgeHubHome();
-			}
-			else
-				JOptionPane.showMessageDialog(null, "Invalid User/Password");
-			
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+                // Check if the line has enough characters before extracting substrings
+                if (lineForUser.length() >= 9) {
+                    String forUser = lineForUser.substring(9);
+
+                    if (usr.equals(forUser)) {
+                        // Move the file pointer to the beginning of the line
+                        raf.seek(raf.getFilePointer() - lineForUser.length() - 2);
+
+                        // Write updated information
+                        raf.writeBytes("Username:" + usr + "\r\n");
+                        raf.writeBytes("Password:" + newPswd + "\r\n");
+                        raf.writeBytes("Email:" + newMail + "\r\n");
+                        raf.writeBytes("Fname:" + newFname + "\r\n");
+                        raf.writeBytes("Lname:" + newLname + "\r\n");
+                        raf.writeBytes("Age:" + newAge + "\r\n");
+                        raf.writeBytes("Phonenum:" + newPhonenumber);
+                        raf.writeBytes("\r\n");
+                        raf.writeBytes("\r\n");     
+                        break; // exit the loop once the update is done
+                    }
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RegistrationForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
     
 }
