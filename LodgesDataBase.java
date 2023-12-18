@@ -25,11 +25,11 @@
 		    String[][] lodgesLocations = {
 		    								{"Sanciangko St., Kalubihan, Cebu City, Besides Cebuana Lhuiller","Sanciangko St., Kalubihan, Cebu City", "Corner P. Lopez St., Kalubihan, Cebu City", "Corner P. Lopez St. and Balintawak, Kalubihan, Cebu City","Colon St., Kalubihan, Cebu City, Besides at Kara’s Fried Chicken"},
 		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
-		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
-		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
-		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
-		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
-		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
+		    								{"Holy Family Rd, Cebu City, 6000 Cebu","Avc bldg, Salinas Dr, Apas", "Sanson Road, Lahug, Cebu City",":  v. rama ave. english, cebu, Cebu City", "Englis V. Rama Ave., Cebu City, Philippines"},
+		    								{"General Echavez St, Cebu City","D. Jakosalem St, Cebu City, 6000 Cebu", " Dionisio Jakosalem St, Cebu City, 6000 Cebu","192 General Echavez St, Cebu City, 6000 Cebu", "197 Rahmann St, Cebu City, 6000 Cebu"},
+		    								{"Cebu City, 6000 Cebu","Cashmere St, Cebu City", " Balud St, Cebu City, 6000 Cebu","13 Bayabas St, Cebu City, 6000 Cebu", ""},
+		    								{"Queblar corner Flancia Street","Francisco Llamas Street, Mambaling, Cebu City", "Punta Princesa San Lorenzo Village, E Sabellano Street, Cebu City, 6000 Cebu","", ""},
+		    								{"Near CEERS REVIEW CENTER, Cebu City, 6000 Cebu","466 Francisco Llamas St, Cebu City, 6000 Cebu","", "", ""},
 		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
 		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
 		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
@@ -38,6 +38,8 @@
 		    								{"Leon Kilat St., Pahina Central, Cebu City","Corner A. Borromeo St. and Leon Kilat St., Pahina Central, Cebu City", "Leon Kilat St., Pahina Central, Cebu City","Leon Kilat St., Pahina Central, Cebu City", ""},
 		    								
 		    							};
+		    String contactnumber[] = {"096321455","0931034645", "452-4645-800", "556-789-624", "098975663", "744-550-348"};
+		    String rate[] = {"Rate: PHP 399/ 4 Hours", "Rate: PHP 400/ 4 Hours", "Rate: PHP 800/ 4 Hours", "Rate: PHP 550/ 4 Hours", "Rate: PHP 350/ 4 Hours"};
 		    
 		    ImageIcon img1 = new ImageIcon("showLodge.jpg");
 		    ImageIcon img2 = new ImageIcon("showLodge.jpg");
@@ -45,21 +47,21 @@
 		    ImageIcon img4 = new ImageIcon("showLodge.jpg");
 		    ImageIcon img5 = new ImageIcon("showLodge.jpg");
 		    // Kalubihan
-		    ImageIcon Kalubihanimg1 = new ImageIcon("showLodge.jpg");
-		    ImageIcon Kalubihanimg2 = new ImageIcon("showLodge.jpg");
-		    ImageIcon Kalubihanimg3 = new ImageIcon("showLodge.jpg");
-		    ImageIcon Kalubihanimg4 = new ImageIcon("showLodge.jpg");
-		    ImageIcon Kalubihanimg5 = new ImageIcon("showLodge.jpg");
+		    ImageIcon Kalubihanimg1 = new ImageIcon("Sogo.jpg");
+		    ImageIcon Kalubihanimg2 = new ImageIcon("TMSlodge.jpg");
+		    ImageIcon Kalubihanimg3 = new ImageIcon("alemarbudgetel.jpg");
+		    ImageIcon Kalubihanimg4 = new ImageIcon("BESTINN.jpg");
+		    ImageIcon Kalubihanimg5 = new ImageIcon("HPH.jpg");
 		    
 		    // Pahina Central
-		    ImageIcon Pahinaimg1 = new ImageIcon("oyo982.jpg");
-		    ImageIcon Pahinaimg2 = new ImageIcon("oyo982.jpg");
-		    ImageIcon Pahinaimg3 = new ImageIcon("oyo982.jpg");
-		    ImageIcon Pahinaimg4 = new ImageIcon("oyo982.jpg");
+		    ImageIcon Pahinaimg1 = new ImageIcon("TMSlodge.jpg");
+		    ImageIcon Pahinaimg2 = new ImageIcon("KSL.png");
+		    ImageIcon Pahinaimg3 = new ImageIcon("BESTINN.jpg");
+		    ImageIcon Pahinaimg4 = new ImageIcon("qhotel.jpg");
 		    ImageIcon Pahinaimg5 = new ImageIcon("oyo982.jpg");
 		    
 		    // Lahug
-		    ImageIcon Lahugimg1 = new ImageIcon("showLodge.jpg");
+		    ImageIcon Lahugimg1 = new ImageIcon("cebuguesstinn.jpg");
 		    ImageIcon Lahugimg2 = new ImageIcon("showLodge.jpg");
 		    ImageIcon Lahugimg3 = new ImageIcon("showLodge.jpg");
 		    ImageIcon Lahugimg4 = new ImageIcon("showLodge.jpg");
