@@ -79,6 +79,7 @@ public class RegistrationForm extends JFrame{
 	JTextField username = new RoundJTextField(15);
 	JPasswordField password = new RoundJPasswordField(15);
     JPasswordField confirmpass = new RoundJPasswordField(15);
+    
 	
     public void openRegister(int updateOrRegister) {
     	this.updateOrRegister = updateOrRegister;
