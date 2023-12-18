@@ -1,7 +1,5 @@
 package trashcash;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -79,9 +77,7 @@ public class RegistrationBackend {
 		}
     }
     // This checks the data inputted in the login user and pass if it matches or not, dire ang naay error
-    // If sayop na user og pass imong ibutang sa login supposedly mo display incorrect user/pass
-    // Nya dili man, Calida try to find out ngano ni, after nimo ma solve e remove ni na comment nya ipabilin ang 
-    // info about ani nga method
+
     void logic(String usr, String pswd) {
     	try {
 			RandomAccessFile raf = new RandomAccessFile(f + "\\accounts.txt", "rw");
