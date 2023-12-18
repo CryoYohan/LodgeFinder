@@ -1,3 +1,4 @@
+package trashcash;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
@@ -205,7 +206,8 @@ public class LodgeHubLoginFrame extends JFrame{
         	public void mouseClicked(MouseEvent e) {
         		if(e.getSource() == greenHere) {
         			dispose();
-        			register.openRegister();
+        			int updateOrRegister = 1;
+        			register.openRegister(updateOrRegister);
         		}
         	}
         		// if user hovers over highlighted "here" button it will change cursor to hand
@@ -232,9 +234,11 @@ public class LodgeHubLoginFrame extends JFrame{
        // loginButton.addActionListener(this);
         loginButton.addMouseListener(new MouseAdapter() {
         		public void mouseClicked(MouseEvent e) {
-        			if(e.getSource() == loginButton) {
-        				loginButtonUserPass();
-        			
+        			if(e.getSource() == loginButton) {       				 
+        				if(username.getText().equals("Enter username") && password.getText().equals("Enter password")) 
+        					JOptionPane.showMessageDialog(null, "Fields cannot be empty!", "LodgeFinder", JOptionPane.WARNING_MESSAGE);    				
+        				else 
+        					loginButtonUserPass();        				
         			}
         		}
         		@Override
@@ -306,7 +310,10 @@ public class LodgeHubLoginFrame extends JFrame{
         password.addKeyListener(new KeyAdapter() {
         	public void keyPressed(KeyEvent e) {
         		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-        			loginButtonUserPass();
+        			if(username.getText().equals("Enter username") || password.getText().equals("Enter password")) 
+    					JOptionPane.showMessageDialog(null, "Fields cannot be empty!", "LodgeFinder", JOptionPane.WARNING_MESSAGE);    				
+    				else 
+    					loginButtonUserPass();     
         		}
         	}
         });
