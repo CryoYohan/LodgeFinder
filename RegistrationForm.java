@@ -15,6 +15,8 @@ public class RegistrationForm extends JFrame{
 	final int FRAME_SIZE_HEIGHT = 653;
 	private String usernameVar = " ", passwordVar = " ";
     String localfname, locallname, localphonenumber, localemail, user, pass, localage;
+    
+    int updateOrRegister = 0;
 	
 	// Main Panels
 	JPanel loginPanelLeft = new JPanel();
@@ -78,7 +80,8 @@ public class RegistrationForm extends JFrame{
 	JPasswordField password = new RoundJPasswordField(15);
     JPasswordField confirmpass = new RoundJPasswordField(15);
 	
-    public void openRegister() {
+    public void openRegister(int updateOrRegister) {
+    	this.updateOrRegister = updateOrRegister;
     	this.setSize(FRAME_SIZE_WIDTH, FRAME_SIZE_HEIGHT);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -379,7 +382,7 @@ public class RegistrationForm extends JFrame{
            						JOptionPane.showMessageDialog(null, "Password do not match!", "LodgeHub", JOptionPane.ERROR_MESSAGE);
            					}
            					else {
-           						registerCondition();   
+           						registerCondition(updateOrRegister);   
            					}
            				}
            				else {
@@ -456,7 +459,7 @@ public class RegistrationForm extends JFrame{
        						JOptionPane.showMessageDialog(null, "Password do not match!", "LodgeHub", JOptionPane.ERROR_MESSAGE);
        					}
        					else {
-       						registerCondition();  
+       						registerCondition(updateOrRegister);  
        					}
         			}
        				else {
@@ -468,22 +471,45 @@ public class RegistrationForm extends JFrame{
         });
 	}
     
-    public void registerCondition() {
-    		localfname = fname.getText();
-			locallname = lname.getText();
-			localphonenumber = phonenumber.getText();
-			localemail = email.getText();
-			//String ageconvert = age.getText();
-			localage = age.getText();
-			user = username.getText();
-			pass = password.getText();
-			backend.createFolder();
-			backend.readFile();
-			backend.countLines();
-			backend.addData(user,pass,localemail, localfname, locallname, localphonenumber,  localage);
-			JOptionPane.showMessageDialog(null, "REGISTERED!", "LodgeHub", JOptionPane.INFORMATION_MESSAGE);
-			dispose();
-			new LodgeHubLoginFrame(); 
+    public void registerCondition(int updateOrRegister) {
+    		switch(updateOrRegister) {
+    		
+    		case 1:
+    			localfname = fname.getText();
+    			locallname = lname.getText();
+    			localphonenumber = phonenumber.getText();
+    			localemail = email.getText();
+    			//String ageconvert = age.getText();
+    			localage = age.getText();
+    			user = username.getText();
+    			pass = password.getText();
+    			backend.createFolder();
+    			backend.readFile();
+    			backend.countLines();
+    			backend.addData(user,pass,localemail, localfname, locallname, localphonenumber,  localage);
+    			JOptionPane.showMessageDialog(null, "Registered successfully!", "LodgeHub", JOptionPane.INFORMATION_MESSAGE);
+    			dispose();
+    			new LodgeHubLoginFrame(); 
+    			break;
+    			
+    		case 2:
+    			localfname = fname.getText();
+    			locallname = lname.getText();
+    			localphonenumber = phonenumber.getText();
+    			localemail = email.getText();
+    			//String ageconvert = age.getText();
+    			localage = age.getText();
+    			user = username.getText();
+    			pass = password.getText();
+    			backend.createFolder();
+    			backend.readFile();
+    			backend.countLines();
+    			backend.updateData(user,pass,localemail, localfname, locallname, localphonenumber,  localage);
+    			JOptionPane.showMessageDialog(null, "Data updated successfully!", "LodgeHub", JOptionPane.INFORMATION_MESSAGE);
+    			dispose();
+    			new LodgeHubLoginFrame(); 
+    		}
+    		
     }
     
     public void addplaceHolder(JTextField textfield, String textfieldPH) {
